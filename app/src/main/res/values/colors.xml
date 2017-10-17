@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="primary">@color/green04</color>
+  <color name="primary_dark">@color/greenDark</color>
+  <color name="accent">@color/amber</color>
+
+  <!-- for UI components -->
+  <color name="toolbar_bg">@color/gray01</color>
+  <color name="toolbar_bg_alpha80">@color/gray01_alpha80</color>
+
+  <!-- Color Palette -->
+  <color name="black_alpha87">#de000000</color>
+  <color name="grayDark01">#494949</color>
+  <color name="gray01">#757575</color>
+  <color name="gray01_alpha80">#cc757575</color>
+  <color name="black_alpha42">#aa000000</color>
+  <color name="gray02">#b2b2b2</color>
+  <color name="gray03">#bababa</color>
+  <color name="gray03_alpha80">#ccbababa</color>
+  <color name="gray04">#d6d6d6</color>
+  <color name="black_alpha12">#1d000000</color>
+  <color name="grayLight01">#f5f5f5</color>
+  <color name="grayLight02">#fafafa</color>
+  <color name="white">#ffffff</color>
+  <color name="blue">#0173ed</color>
+  <color name="blueLight">#90caf9</color>
+  <color name="greenDark">#007900</color>
+  <color name="green04">#00aa00</color>
+  <color name="green03">#22c630</color>
+  <color name="green02">#41dd22</color>
+  <color name="green01">#80ff5c</color>
+  <color name="amber">#ffab00</color>
+  <color name="amberDark">#ff9100</color>
+  <color name="red">#ed0038</color>
+  <color name="redDark">#d50000</color>
+</resources>

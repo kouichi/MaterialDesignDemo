@@ -1,0 +1,29 @@
+<resources>
+  <string name="app_name">MaterialDesignDemo</string>
+
+  <!-- Menu -->
+  <string name="menu_action_title_refresh">更新</string>
+  <string name="menu_action_title_refresh_disabled">更新(不)</string>
+  <string name="menu_action_title_add">登録</string>
+  <string name="menu_action_title_other_menu">メニュー切替</string>
+
+  <!-- Activity -->
+  <string name="main_activity_title">Home</string>
+  <string name="main_activity_subtitle">動作検証用</string>
+
+  <string name="button_activity_title">Buttons</string>
+  <string name="button_activity_headline_flat_buttons">Flat Buttons</string>
+  <string name="button_activity_txt_raised_button">汎用</string>
+  <string name="button_activity_txt_raised_button_disabled">汎用(不可)</string>
+  <string name="button_activity_txt_raised_button_warn">警告</string>
+  <string name="button_activity_txt_raised_button_warn_disabled">警告(不可)</string>
+  <string name="button_activity_headline_raised_buttons">Raised Buttons</string>
+  <string name="button_activity_txt_flat_button">ボタン</string>
+  <string name="button_activity_txt_flat_button_disabled">ボタン(不可)</string>
+
+  <string name="switch_activity_title">Switches</string>
+
+  <!-- Toast -->
+  <string name="toast_pressed_menu_item_msg">メニューから選択されました</string>
+
+</resources>

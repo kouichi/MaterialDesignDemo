@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <item
+      android:id="@+id/menu_action_refresh_text"
+      android:title="@string/menu_action_title_refresh"
+      app:showAsAction="ifRoom"
+      />
+  <item
+      android:id="@+id/menu_action_refresh_text_disabled"
+      android:enabled="false"
+      android:title="@string/menu_action_title_refresh"
+      app:showAsAction="ifRoom"
+      />
+  <item
+      android:id="@+id/menu_action_other_menu"
+      android:icon="@drawable/ic_swap_horiz_vector_tinted_24dp"
+      android:title="@string/menu_action_title_other_menu"
+      app:showAsAction="never"
+      />
+
+</menu>
