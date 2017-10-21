@@ -1,69 +1,69 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-  <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:textColorPrimary">@color/grayDark01</item>
-    <item name="android:textColorSecondary">@color/gray01</item>
+    <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/grayDark01</item>
+        <item name="android:textColorSecondary">@color/gray01</item>
 
-    <!-- Colors :: support library -->
-    <item name="colorPrimary">@color/primary</item>
-    <item name="colorPrimaryDark">@color/primary_dark</item>
-    <item name="colorAccent">@color/accent</item>
+        <!-- Colors :: support library -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
 
-    <item name="colorControlHighlight">@color/blueLight</item>
+        <item name="colorControlHighlight">@color/blueLight</item>
 
-    <item name="actionMenuTextColor">@color/tint_menu_item</item>
+        <item name="actionMenuTextColor">@color/tint_menu_item</item>
 
-    <!-- Colors :: Lollipop 以降の端末でのみ有効 -->
-    <item name="android:statusBarColor" tools:targetApi="lollipop">@color/primary_dark</item>
-    <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/primary_dark</item>
+        <!-- Colors :: Lollipop 以降の端末でのみ有効 -->
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/primary_dark</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/primary_dark</item>
 
-    <!-- Customized Styles -->
-    <item name="toolbarStyle">@style/_MyWidget.Toolbar</item>
+        <!-- Customized Styles -->
+        <item name="toolbarStyle">@style/_MyWidget.Toolbar</item>
 
-    <item name="switchStyle">@style/_MyTextAppearance.Widget.Switch</item>
-  </style>
+        <item name="switchStyle">@style/_MyTextAppearance.Widget.Switch</item>
+    </style>
 
-  <!-- ===== Toolbar ======================================== -->
+    <!-- ===== Toolbar ======================================== -->
 
-  <style name="_MyWidget.Toolbar" parent="Widget.AppCompat.Toolbar">
-    <item name="android:background">@color/primary</item>
-    <item name="titleTextAppearance">@style/_MyTextAppearance.Widget.Toolbar.Title</item>
-    <item name="subtitleTextAppearance">@style/_MyTextAppearance.Widget.Toolbar.Subtitle</item>
-  </style>
+    <style name="_MyWidget.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/primary</item>
+        <item name="titleTextAppearance">@style/_MyTextAppearance.Widget.Toolbar.Title</item>
+        <item name="subtitleTextAppearance">@style/_MyTextAppearance.Widget.Toolbar.Subtitle</item>
+    </style>
 
-  <!-- ===== Toolbar :: TextAppearance ======================================== -->
+    <!-- ===== Toolbar :: TextAppearance ======================================== -->
 
-  <style name="_MyTextAppearance.Widget.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-    <!-- カスタマイズしない場合、 textColorPrimary が使われる -->
-    <item name="android:textColor">@color/white</item>
-  </style>
+    <style name="_MyTextAppearance.Widget.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <!-- カスタマイズしない場合、 textColorPrimary が使われる -->
+        <item name="android:textColor">@color/white</item>
+    </style>
 
-  <style name="_MyTextAppearance.Widget.Toolbar.Subtitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
-    <!-- カスタマイズしない場合、 textColorSecondary が使われる -->
-    <item name="android:textColor">@color/grayLight01</item>
-  </style>
+    <style name="_MyTextAppearance.Widget.Toolbar.Subtitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <!-- カスタマイズしない場合、 textColorSecondary が使われる -->
+        <item name="android:textColor">@color/grayLight01</item>
+    </style>
 
-  <!-- ===== Button ======================================== -->
+    <!-- ===== Button ======================================== -->
 
-  <style name="MyWidget.Button" parent="Widget.AppCompat.Button.Colored">
-    <item name="android:textColor">@color/button_text_color</item>
-    <item name="colorButtonNormal">@color/gray04</item>
-    <item name="colorControlHighlight">@color/grayLight01</item>
-  </style>
+    <style name="MyWidget.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="colorButtonNormal">@color/gray04</item>
+        <item name="colorControlHighlight">@color/grayLight01</item>
+    </style>
 
-  <style name="MyWidget.Button.Warn">
-    <item name="android:textColor">@color/button_text_color_light</item>
-    <item name="colorButtonNormal">@color/red</item>
-  </style>
+    <style name="MyWidget.Button.Warn">
+        <item name="android:textColor">@color/button_text_color_light</item>
+        <item name="colorButtonNormal">@color/red</item>
+    </style>
 
-  <style name="MyWidget.Button.Borderless" parent="Widget.AppCompat.Button.Borderless.Colored">
-    <item name="android:textColor">@color/button_text_color</item>
-  </style>
+    <style name="MyWidget.Button.Borderless" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/button_text_color</item>
+    </style>
 
 
-  <!-- ===== Switch ======================================== -->
+    <!-- ===== Switch ======================================== -->
 
-  <style name="_MyTextAppearance.Widget.Switch" parent="TextAppearance.AppCompat.Widget.Switch">
-  </style>
+    <style name="_MyTextAppearance.Widget.Switch" parent="TextAppearance.AppCompat.Widget.Switch">
+    </style>
 
 </resources>
