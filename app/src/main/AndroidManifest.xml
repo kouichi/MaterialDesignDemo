@@ -24,7 +24,7 @@
             android:name=".ButtonActivity"
             android:exported="false"/>
         <activity
-            android:name=".SwitchActivity"
+            android:name=".DialogActivity"
             android:exported="false"/>
     </application>
 

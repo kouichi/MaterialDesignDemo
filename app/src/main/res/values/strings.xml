@@ -21,7 +21,30 @@
     <string name="button_activity_txt_flat_button">ボタン</string>
     <string name="button_activity_txt_flat_button_disabled">ボタン(不可)</string>
 
-    <string name="switch_activity_title">Switches</string>
+    <string name="dialog_activity_title">Dialogs</string>
+
+    <!-- Dialog -->
+    <string name="dialog_positive_negative_buttons_title">Use Google\'s location service?</string>
+    <string name="dialog_positive_negative_buttons_msg">Let Google help apps determine location. This means sending anonymous location data to Google, event when no apps are running.</string>
+    <string name="dialog_stacked_full_width_buttons_title">Googleの位置情報サービスを使用しますか？</string>
+    <string name="dialog_stacked_full_width_buttons_msg">Googleがアプリの位置特定を手伝うようにしましょう。これは、アプリが実行されていないときに匿名の位置データをGoogleに送信することを意味します。</string>
+    <string name="dialog_stacked_full_width_buttons_btn_positive">スピードブーストをオンにする</string>
+    <string name="dialog_stacked_full_width_buttons_btn_negative">いいえ、結構です</string>
+    <string name="dialog_single_choices_title">Phone Ringtone</string>
+    <string-array name="dialog_single_choices_items">
+        <item>None</item>
+        <item>Callisto</item>
+        <item>Ganymede</item>
+        <item>Luna</item>
+        <item>Orion</item>
+    </string-array>
+    <string name="dialog_simple_title">Set backup account</string>
+
+    <!-- Button -->
+    <string name="btn_label_ok">OK</string>
+    <string name="btn_label_cancel">Cancel</string>
+    <string name="btn_label_agree">Agree</string>
+    <string name="btn_label_disagree">Disagree</string>
 
     <!-- Toast -->
     <string name="toast_pressed_menu_item_msg">メニューから選択されました</string>
