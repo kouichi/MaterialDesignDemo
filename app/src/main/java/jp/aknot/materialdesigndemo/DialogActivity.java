@@ -67,10 +67,10 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                     break;
                 case 3:
                     IconListAdapter.Item[] itemList = {
-                            new IconListAdapter.Item(R.drawable.ic_person_gray_24dp, "taro@example.com"),
-                            new IconListAdapter.Item(R.drawable.ic_person_gray_24dp, "jiro@example.com"),
-                            new IconListAdapter.Item(R.drawable.ic_person_gray_24dp, "hanako@example.com"),
-                            new IconListAdapter.Item(R.drawable.ic_add_circle_gray_24dp, "add account"),
+                            new IconListAdapter.Item(R.drawable.ic_person_vector_tinted_40dp, "taro@example.com"),
+                            new IconListAdapter.Item(R.drawable.ic_person_vector_tinted_40dp, "jiro@example.com"),
+                            new IconListAdapter.Item(R.drawable.ic_person_vector_tinted_40dp, "hanako@example.com"),
+                            new IconListAdapter.Item(R.drawable.ic_add_circle_vector_tinted_40dp, "add account"),
                     };
                     new AkDialogFragment.Builder(this)
                             .title(R.string.dialog_simple_title)
