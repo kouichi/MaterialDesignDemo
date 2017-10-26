@@ -43,7 +43,9 @@ import jp.aknot.materialdesigndemo.adapter.IconListAdapter;
 public class AkDialogFragment extends DialogFragment {
 
     private static final String TAG = "@" + AkDialogFragment.class.getSimpleName();
+
     private boolean eventTrackingEnabled;
+
     private Callback callback;
 
     public AkDialogFragment() {
@@ -192,31 +194,49 @@ public class AkDialogFragment extends DialogFragment {
         public static final String ARGS_ERROR = "error";
         public static final String ARGS_REQUEST_CODE = "requestCode";
         public static final String ARGS_EVENT_TRACKING_ENABLED = "eventTrackingEnabled";
+
         static final int UNKNOWN_RES_ID = 0;
+
         final AppCompatActivity activity;
+
         /** イベントトラッキングを有効にするか否か. */
         final boolean eventTrackingEnabled;
+
         @StyleRes
-        int themeResId;
+        int themeResId = UNKNOWN_RES_ID;
+
         @DrawableRes
-        int iconResId;
+        int iconResId = UNKNOWN_RES_ID;
+
         String title;
+
         String message;
+
         @ArrayRes
         int itemsResId = UNKNOWN_RES_ID;
+
         @ArrayRes
-        int singleChoiceItemsResId;
+        int singleChoiceItemsResId = UNKNOWN_RES_ID;
+
         IconListAdapter.Item[] iconItems;
+
         @StringRes
-        int positiveBtnTextResId;
+        int positiveBtnTextResId = UNKNOWN_RES_ID;
+
         @StringRes
-        int negativeBtnTextResId;
+        int negativeBtnTextResId = UNKNOWN_RES_ID;
+
         @StringRes
-        int neutralBtnTextResId;
+        int neutralBtnTextResId = UNKNOWN_RES_ID;
+
         int requestCode = -1;
+
         Bundle params;
+
         boolean cancelable = true;
+
         Bundle error = null;
+
         String tag = "default";
 
         public <A extends AppCompatActivity & Callback> Builder(@NonNull final A activity) {
