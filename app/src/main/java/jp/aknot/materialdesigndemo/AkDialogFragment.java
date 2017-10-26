@@ -131,9 +131,11 @@ public class AkDialogFragment extends DialogFragment {
             builder.setNeutralButton(neutralBtnTextResId, wrapOnButtonClickListenerIfNeeds(title, neutralBtnTextResId, args));
         }
 
-        builder.setCancelable(cancelable);
-
         AlertDialog dialog = builder.create();
+
+        // AlertDialog.Builder#setCancelable(boolean) で設定が反映されないので注意
+        setCancelable(cancelable);
+
         return dialog;
     }
 
