@@ -8,6 +8,7 @@ import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_RES
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ITEMS_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_MESSAGE;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEGATIVE_BTN_TEXT_RES_ID;
+import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEUTRAL_BTN_TEXT_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_PARAMS;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_POSITIVE_BTN_TEXT_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_REQUEST_CODE;
@@ -79,6 +80,7 @@ public class AkDialogFragment extends DialogFragment {
         final IconListAdapter.Item[] iconItems = (IconListAdapter.Item[]) args.getParcelableArray(ARGS_ICON_ITEMS_ID);
         @StringRes final int positiveBtnTextResId = args.getInt(ARGS_POSITIVE_BTN_TEXT_RES_ID);
         @StringRes final int negativeBtnTextResId = args.getInt(ARGS_NEGATIVE_BTN_TEXT_RES_ID);
+        @StringRes final int neutralBtnTextResId = args.getInt(ARGS_NEUTRAL_BTN_TEXT_RES_ID);
 
         final boolean cancelable = args.getBoolean(ARGS_CANCELABLE);
 
@@ -122,9 +124,11 @@ public class AkDialogFragment extends DialogFragment {
         if (positiveBtnTextResId != UNKNOWN_RES_ID) {
             builder.setPositiveButton(positiveBtnTextResId, wrapOnButtonClickListenerIfNeeds(title, positiveBtnTextResId, args));
         }
-
         if (negativeBtnTextResId != UNKNOWN_RES_ID) {
             builder.setNegativeButton(negativeBtnTextResId, wrapOnButtonClickListenerIfNeeds(title, negativeBtnTextResId, args));
+        }
+        if (neutralBtnTextResId != UNKNOWN_RES_ID) {
+            builder.setNeutralButton(neutralBtnTextResId, wrapOnButtonClickListenerIfNeeds(title, neutralBtnTextResId, args));
         }
 
         builder.setCancelable(cancelable);
@@ -180,6 +184,7 @@ public class AkDialogFragment extends DialogFragment {
         public static final String ARGS_ICON_ITEMS_ID = "iconItems";
         public static final String ARGS_POSITIVE_BTN_TEXT_RES_ID = "positiveBtnTextResId";
         public static final String ARGS_NEGATIVE_BTN_TEXT_RES_ID = "negativeBtnTextResId";
+        public static final String ARGS_NEUTRAL_BTN_TEXT_RES_ID = "neutralBtnTextResId";
         public static final String ARGS_CANCELABLE = "cancelable";
         public static final String ARGS_PARAMS = "params";
         public static final String ARGS_ERROR = "error";
@@ -204,6 +209,8 @@ public class AkDialogFragment extends DialogFragment {
         int positiveBtnTextResId;
         @StringRes
         int negativeBtnTextResId;
+        @StringRes
+        int neutralBtnTextResId;
         int requestCode = -1;
         Bundle params;
         boolean cancelable = true;
@@ -304,8 +311,13 @@ public class AkDialogFragment extends DialogFragment {
             return this;
         }
 
+        public Builder neutralButton(@StringRes int textResId) {
+            this.neutralBtnTextResId = textResId;
+            return this;
+        }
+
         public Builder cancelButton() {
-            return negativeButton(R.string.btn_label_cancel);
+            return neutralButton(R.string.btn_label_cancel);
         }
 
         public Builder requestCode(int requestCode) {
@@ -348,6 +360,7 @@ public class AkDialogFragment extends DialogFragment {
             args.putParcelableArray(ARGS_ICON_ITEMS_ID, iconItems);
             args.putInt(ARGS_POSITIVE_BTN_TEXT_RES_ID, positiveBtnTextResId);
             args.putInt(ARGS_NEGATIVE_BTN_TEXT_RES_ID, negativeBtnTextResId);
+            args.putInt(ARGS_NEUTRAL_BTN_TEXT_RES_ID, neutralBtnTextResId);
             args.putBoolean(ARGS_CANCELABLE, cancelable);
             if (params != null) {
                 args.putBundle(ARGS_PARAMS, params);
