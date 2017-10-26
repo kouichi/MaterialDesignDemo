@@ -53,7 +53,6 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                             .message(R.string.dialog_stacked_full_width_buttons_msg)
                             .positiveButton(R.string.dialog_stacked_full_width_buttons_btn_positive)
                             .negativeButton(R.string.dialog_stacked_full_width_buttons_btn_negative)
-                            .cancelable(false)
                             .requestCode(REQ_STACKED_FULL_WIDTH_BUTTONS_CODE)
                             .show();
                     break;
@@ -63,7 +62,6 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                             .singleChoiceItems(R.array.dialog_single_choices_items)
                             .okButton()
                             .cancelButton()
-                            .cancelable(false)
                             .requestCode(REQ_SINGLE_CHOICES_ITEMS_CODE)
                             .show();
                     break;
@@ -77,7 +75,6 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                     new AkDialogFragment.Builder(this)
                             .title(R.string.dialog_simple_title)
                             .iconItems(itemList)
-                            .cancelable(false)
                             .requestCode(REQ_ICON_ITEMS_CODE)
                             .show();
                     break;
