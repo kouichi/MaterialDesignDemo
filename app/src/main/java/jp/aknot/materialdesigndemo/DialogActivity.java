@@ -37,6 +37,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
             switch (position) {
                 case 0:
                     new AkDialogFragment.Builder(DialogActivity.this, true)
+                            .theme(R.style.MyThemeOverlay_Dialog_Alert)
                             .title(R.string.dialog_positive_negative_buttons_title)
                             .message(R.string.dialog_positive_negative_buttons_msg)
                             .positiveButton(R.string.btn_label_agree)
@@ -47,6 +48,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                     break;
                 case 1:
                     new AkDialogFragment.Builder(DialogActivity.this, true)
+                            .theme(R.style.MyThemeOverlay_Dialog_Alert_Warn)
                             .title(R.string.dialog_stacked_full_width_buttons_title)
                             .message(R.string.dialog_stacked_full_width_buttons_msg)
                             .positiveButton(R.string.dialog_stacked_full_width_buttons_btn_positive)

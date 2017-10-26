@@ -14,6 +14,7 @@ import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_POSITIVE
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_POSITIVE_BTN_TEXT_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_REQUEST_CODE;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_SINGLE_CHOICE_ITEMS_RES_ID;
+import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_THEME_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_TITLE;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.UNKNOWN_RES_ID;
 
@@ -28,6 +29,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.annotation.StyleRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -72,6 +74,8 @@ public class AkDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final FragmentActivity activity = getActivity();
         final Bundle args = getArguments();
+
+        @StyleRes final int themeResId = args.getInt(ARGS_THEME_RES_ID, UNKNOWN_RES_ID);
         @DrawableRes final int iconResId = args.getInt(ARGS_ICON_RES_ID);
         final String title = args.getString(ARGS_TITLE);
         final String message = args.getString(ARGS_MESSAGE);
@@ -91,7 +95,8 @@ public class AkDialogFragment extends DialogFragment {
 
         this.eventTrackingEnabled = args.getBoolean(ARGS_EVENT_TRACKING_ENABLED);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity, getTheme());
+        AlertDialog.Builder builder =
+                themeResId != UNKNOWN_RES_ID ? new AlertDialog.Builder(activity, themeResId) : new AlertDialog.Builder(activity);
         if (iconResId != UNKNOWN_RES_ID) {
             builder.setIcon(iconResId);
         }
@@ -190,6 +195,7 @@ public class AkDialogFragment extends DialogFragment {
 
     public static class Builder {
 
+        public static final String ARGS_THEME_RES_ID = "themeResId";
         public static final String ARGS_ICON_RES_ID = "iconResId";
         public static final String ARGS_TITLE = "title";
         public static final String ARGS_MESSAGE = "message";
@@ -209,6 +215,8 @@ public class AkDialogFragment extends DialogFragment {
         final AppCompatActivity activity;
         /** イベントトラッキングを有効にするか否か. */
         final boolean eventTrackingEnabled;
+        @StyleRes
+        int themeResId;
         @DrawableRes
         int iconResId;
         String title;
@@ -241,6 +249,12 @@ public class AkDialogFragment extends DialogFragment {
         public <A extends AppCompatActivity & Callback> Builder(@NonNull final A activity, boolean eventTrackingEnabled) {
             this.activity = activity;
             this.eventTrackingEnabled = eventTrackingEnabled;
+        }
+
+        @NonNull
+        public Builder theme(@StyleRes int themeResId) {
+            this.themeResId = themeResId;
+            return this;
         }
 
         @NonNull
@@ -367,6 +381,7 @@ public class AkDialogFragment extends DialogFragment {
 
         public void show() {
             final Bundle args = new Bundle();
+            args.putInt(ARGS_THEME_RES_ID, themeResId);
             args.putInt(ARGS_ICON_RES_ID, iconResId);
             args.putString(ARGS_TITLE, title);
             args.putString(ARGS_MESSAGE, message);
