@@ -7,10 +7,8 @@ import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_ITE
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ITEMS_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_MESSAGE;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEGATIVE_BTN_COLOR_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEGATIVE_BTN_TEXT_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_PARAMS;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_POSITIVE_BTN_COLOR_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_POSITIVE_BTN_TEXT_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_REQUEST_CODE;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_SINGLE_CHOICE_ITEMS_RES_ID;
@@ -24,7 +22,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
-import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,14 +29,12 @@ import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import jp.aknot.materialdesigndemo.adapter.IconListAdapter;
@@ -83,9 +78,7 @@ public class AkDialogFragment extends DialogFragment {
         @ArrayRes final int singleChoiceItemsResId = args.getInt(ARGS_SINGLE_CHOICE_ITEMS_RES_ID);
         final IconListAdapter.Item[] iconItems = (IconListAdapter.Item[]) args.getParcelableArray(ARGS_ICON_ITEMS_ID);
         @StringRes final int positiveBtnTextResId = args.getInt(ARGS_POSITIVE_BTN_TEXT_RES_ID);
-        @ColorRes final int positiveButtonColorResId = args.getInt(ARGS_POSITIVE_BTN_COLOR_RES_ID);
         @StringRes final int negativeBtnTextResId = args.getInt(ARGS_NEGATIVE_BTN_TEXT_RES_ID);
-        @ColorRes final int negativeButtonColorResId = args.getInt(ARGS_NEGATIVE_BTN_COLOR_RES_ID);
 
         final boolean cancelable = args.getBoolean(ARGS_CANCELABLE);
 
@@ -137,23 +130,6 @@ public class AkDialogFragment extends DialogFragment {
         builder.setCancelable(cancelable);
 
         AlertDialog dialog = builder.create();
-
-        // Positive/Negative のボタンには、文字色を設定可とする。(スタイル定義は大げさなので)
-        // TODO: Style を指定するだけでいいかもしれない(未検証)
-        dialog.setOnShowListener(dlg -> {
-            AlertDialog alertDialog = (AlertDialog) dlg;
-            Context context = alertDialog.getContext();
-            if (positiveButtonColorResId > UNKNOWN_RES_ID) {
-                Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-                positiveButton.setTextColor(ContextCompat.getColor(context, positiveButtonColorResId));
-                positiveButton.invalidate();
-            }
-            if (negativeButtonColorResId > UNKNOWN_RES_ID) {
-                Button negativeButton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-                negativeButton.setTextColor(ContextCompat.getColor(context, negativeButtonColorResId));
-                negativeButton.invalidate();
-            }
-        });
         return dialog;
     }
 
@@ -203,9 +179,7 @@ public class AkDialogFragment extends DialogFragment {
         public static final String ARGS_SINGLE_CHOICE_ITEMS_RES_ID = "singleChoiceItemsResId";
         public static final String ARGS_ICON_ITEMS_ID = "iconItems";
         public static final String ARGS_POSITIVE_BTN_TEXT_RES_ID = "positiveBtnTextResId";
-        public static final String ARGS_POSITIVE_BTN_COLOR_RES_ID = "positiveBtnColorResId";
         public static final String ARGS_NEGATIVE_BTN_TEXT_RES_ID = "negativeBtnTextResId";
-        public static final String ARGS_NEGATIVE_BTN_COLOR_RES_ID = "negativeButtonColorResId";
         public static final String ARGS_CANCELABLE = "cancelable";
         public static final String ARGS_PARAMS = "params";
         public static final String ARGS_ERROR = "error";
@@ -228,12 +202,8 @@ public class AkDialogFragment extends DialogFragment {
         IconListAdapter.Item[] iconItems;
         @StringRes
         int positiveBtnTextResId;
-        @ColorRes
-        int positiveButtonColorResId;
         @StringRes
         int negativeBtnTextResId;
-        @ColorRes
-        int negativeButtonColorResId;
         int requestCode = -1;
         Bundle params;
         boolean cancelable = true;
@@ -325,24 +295,12 @@ public class AkDialogFragment extends DialogFragment {
             return this;
         }
 
-        public Builder coloredPositiveButton(@StringRes int textResId, @ColorRes int colorResId) {
-            this.positiveBtnTextResId = textResId;
-            this.positiveButtonColorResId = colorResId;
-            return this;
-        }
-
         public Builder okButton() {
             return positiveButton(R.string.btn_label_ok);
         }
 
         public Builder negativeButton(@StringRes int textResId) {
             this.negativeBtnTextResId = textResId;
-            return this;
-        }
-
-        public Builder coloredNegativeButton(@StringRes int textResId, @ColorRes int colorResId) {
-            this.negativeBtnTextResId = textResId;
-            this.negativeButtonColorResId = colorResId;
             return this;
         }
 
@@ -389,9 +347,7 @@ public class AkDialogFragment extends DialogFragment {
             args.putInt(ARGS_SINGLE_CHOICE_ITEMS_RES_ID, singleChoiceItemsResId);
             args.putParcelableArray(ARGS_ICON_ITEMS_ID, iconItems);
             args.putInt(ARGS_POSITIVE_BTN_TEXT_RES_ID, positiveBtnTextResId);
-            args.putInt(ARGS_POSITIVE_BTN_COLOR_RES_ID, positiveButtonColorResId);
             args.putInt(ARGS_NEGATIVE_BTN_TEXT_RES_ID, negativeBtnTextResId);
-            args.putInt(ARGS_NEGATIVE_BTN_COLOR_RES_ID, negativeButtonColorResId);
             args.putBoolean(ARGS_CANCELABLE, cancelable);
             if (params != null) {
                 args.putBundle(ARGS_PARAMS, params);
