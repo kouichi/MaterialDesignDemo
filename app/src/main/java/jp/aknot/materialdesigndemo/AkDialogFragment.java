@@ -362,7 +362,7 @@ public class AkDialogFragment extends DialogFragment {
         }
 
         public Builder cancelButton() {
-            return neutralButton(R.string.btn_label_cancel);
+            return negativeButton(R.string.btn_label_cancel);
         }
 
         public Builder requestCode(int requestCode) {
