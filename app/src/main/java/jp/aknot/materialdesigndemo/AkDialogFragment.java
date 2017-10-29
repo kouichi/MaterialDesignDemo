@@ -36,6 +36,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import jp.aknot.materialdesigndemo.adapter.IconListAdapter;
@@ -109,7 +110,11 @@ public class AkDialogFragment extends DialogFragment {
             builder.setItems(itemsResId, wrapOnItemClickListenerIfNeeds(title, itemsResId, args));
         }
         if (singleChoiceItemsResId != UNKNOWN_RES_ID) {
-            builder.setSingleChoiceItems(singleChoiceItemsResId, -1 /* no items are checked. */, null);
+            builder.setSingleChoiceItems(singleChoiceItemsResId, -1 /* no items are checked. */, (dialog, which) -> {
+                AlertDialog alertDialog = (AlertDialog) dialog;
+                Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                positiveButton.setEnabled(true);
+            });
         }
 
         if (iconItems != null && iconItems.length > 0) {
@@ -148,6 +153,14 @@ public class AkDialogFragment extends DialogFragment {
 
         // AlertDialog.Builder#setCancelable(boolean) で設定が反映されないので注意
         setCancelable(cancelable);
+
+        dialog.setOnShowListener(dlg -> {
+            if (singleChoiceItemsResId != UNKNOWN_RES_ID) {
+                AlertDialog alertDialog = (AlertDialog) dlg;
+                Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                positiveButton.setEnabled(false);
+            }
+        });
 
         return dialog;
     }
