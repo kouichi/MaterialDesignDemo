@@ -1,7 +1,6 @@
 package jp.aknot.materialdesigndemo;
 
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_CANCELABLE;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ERROR;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_EVENT_TRACKING_ENABLED;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_ITEMS_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_RES_ID;
@@ -43,8 +42,9 @@ import jp.aknot.materialdesigndemo.adapter.IconListAdapter;
 
 public class AkDialogFragment extends DialogFragment {
 
-    public static final String PARAM_CHECKED_ITEM = "dialog:checkedItem";
+    public static final String PARAM_CHECKED_ITEM_ID = "dialog:checkedItemId";
     public static final String PARAM_CHECKED_ITEM_VALUE = "dialog:checkedItemValue";
+    public static final String PARAM_ERROR = "dialog:error";
     private static final String TAG = "@" + AkDialogFragment.class.getSimpleName();
     private boolean eventTrackingEnabled;
 
@@ -89,7 +89,6 @@ public class AkDialogFragment extends DialogFragment {
         final boolean cancelable = args.getBoolean(ARGS_CANCELABLE);
 
         final Bundle params = args.getBundle(ARGS_PARAMS);
-        final Bundle error = args.getBundle(ARGS_ERROR);
         final int requestCode = args.getInt(ARGS_REQUEST_CODE);
 
         this.eventTrackingEnabled = args.getBoolean(ARGS_EVENT_TRACKING_ENABLED);
@@ -129,7 +128,7 @@ public class AkDialogFragment extends DialogFragment {
                 if (params != null) {
                     p = new Bundle(params);
                 }
-                p.putInt(PARAM_CHECKED_ITEM, position);
+                p.putInt(PARAM_CHECKED_ITEM_ID, position);
                 p.putString(PARAM_CHECKED_ITEM_VALUE, item.title);
                 args.putBundle(ARGS_PARAMS, p);
 
@@ -214,7 +213,6 @@ public class AkDialogFragment extends DialogFragment {
         public static final String ARGS_NEUTRAL_BTN_TEXT_RES_ID = "neutralBtnTextResId";
         public static final String ARGS_CANCELABLE = "cancelable";
         public static final String ARGS_PARAMS = "params";
-        public static final String ARGS_ERROR = "error";
         public static final String ARGS_REQUEST_CODE = "requestCode";
         public static final String ARGS_EVENT_TRACKING_ENABLED = "eventTrackingEnabled";
 
@@ -257,8 +255,6 @@ public class AkDialogFragment extends DialogFragment {
         Bundle params;
 
         boolean cancelable = true;
-
-        Bundle error = null;
 
         String tag = "default";
 
@@ -380,11 +376,6 @@ public class AkDialogFragment extends DialogFragment {
             return this;
         }
 
-        public Builder error(@Nullable Bundle error) {
-            this.error = error;
-            return this;
-        }
-
         public Builder tag(@NonNull String tag) {
             this.tag = tag;
             return this;
@@ -409,9 +400,6 @@ public class AkDialogFragment extends DialogFragment {
             args.putBoolean(ARGS_CANCELABLE, cancelable);
             if (params != null) {
                 args.putBundle(ARGS_PARAMS, params);
-            }
-            if (error != null) {
-                args.putBundle(ARGS_ERROR, error);
             }
             args.putInt(ARGS_REQUEST_CODE, requestCode);
             args.putBoolean(ARGS_EVENT_TRACKING_ENABLED, eventTrackingEnabled);
@@ -526,7 +514,7 @@ public class AkDialogFragment extends DialogFragment {
                     if (params != null) {
                         p = new Bundle(params);
                     }
-                    p.putInt(PARAM_CHECKED_ITEM, position);
+                    p.putInt(PARAM_CHECKED_ITEM_ID, position);
                     p.putString(PARAM_CHECKED_ITEM_VALUE, checkedItem);
                     args.putBundle(ARGS_PARAMS, p);
                 }
