@@ -119,7 +119,16 @@ public class AkDialogFragment extends DialogFragment {
             listView.setOnItemClickListener((parent, view1, position, id) -> {
                 IconListAdapter.Item item = (IconListAdapter.Item) parent.getItemAtPosition(position);
                 Log.d(TAG, "onItemSelected: position=" + position + ", id=" + id + ", item=" + item.title);
-                callback.onAkDialogClicked(requestCode, Activity.RESULT_OK, params);
+
+                Bundle p = new Bundle();
+                if (params != null) {
+                    p = new Bundle(params);
+                }
+                p.putInt(PARAM_CHECKED_ITEM, position);
+                p.putString(PARAM_CHECKED_ITEM_VALUE, item.title);
+                args.putBundle(ARGS_PARAMS, p);
+
+                callback.onAkDialogClicked(requestCode, Activity.RESULT_OK, p);
             });
             builder.setView(view);
         }
@@ -498,13 +507,14 @@ public class AkDialogFragment extends DialogFragment {
                         Log.i(TAG, "Event tracking: " + title + " [" + position + ":" + checkedItem + "]");
                     }
 
+                    Bundle p = new Bundle();
                     Bundle params = getParams();
-                    if (params == null) {
-                        params = new Bundle();
+                    if (params != null) {
+                        p = new Bundle(params);
                     }
-                    params.putInt(PARAM_CHECKED_ITEM, position);
-                    params.putString(PARAM_CHECKED_ITEM_VALUE, checkedItem);
-                    args.putBundle(ARGS_PARAMS, params);
+                    p.putInt(PARAM_CHECKED_ITEM, position);
+                    p.putString(PARAM_CHECKED_ITEM_VALUE, checkedItem);
+                    args.putBundle(ARGS_PARAMS, p);
                 }
                 super.onClick(dialog, which);
             } else {
