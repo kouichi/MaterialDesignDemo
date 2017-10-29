@@ -42,8 +42,9 @@ import jp.aknot.materialdesigndemo.adapter.IconListAdapter;
 
 public class AkDialogFragment extends DialogFragment {
 
+    public static final String PARAM_CHECKED_ITEM = "dialog:checkedItem";
+    public static final String PARAM_CHECKED_ITEM_VALUE = "dialog:checkedItemValue";
     private static final String TAG = "@" + AkDialogFragment.class.getSimpleName();
-
     private boolean eventTrackingEnabled;
 
     private Callback callback;
@@ -108,7 +109,7 @@ public class AkDialogFragment extends DialogFragment {
             builder.setItems(itemsResId, wrapOnItemClickListenerIfNeeds(title, itemsResId, args));
         }
         if (singleChoiceItemsResId != UNKNOWN_RES_ID) {
-            builder.setSingleChoiceItems(singleChoiceItemsResId, -1 /* no items are checked. */, wrapOnItemClickListenerIfNeeds(title, itemsResId, args));
+            builder.setSingleChoiceItems(singleChoiceItemsResId, -1 /* no items are checked. */, null);
         }
 
         if (iconItems != null && iconItems.length > 0) {
@@ -143,7 +144,6 @@ public class AkDialogFragment extends DialogFragment {
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        Log.d(TAG, "onCancel");
         super.onCancel(dialog);
 
         Bundle args = getArguments();
@@ -402,17 +402,16 @@ public class AkDialogFragment extends DialogFragment {
     private static class OnClickListener implements DialogInterface.OnClickListener {
 
         @NonNull
-        private final Callback callback;
-
+        final Bundle args;
         @NonNull
-        private final Bundle args;
+        private final Callback callback;
 
         private OnClickListener(@NonNull Callback callback, @NonNull Bundle args) {
             this.callback = callback;
             this.args = args;
         }
 
-        private Bundle getParams() {
+        Bundle getParams() {
             return args.getBundle(ARGS_PARAMS);
         }
 
@@ -464,7 +463,7 @@ public class AkDialogFragment extends DialogFragment {
     }
 
     /**
-     * Positive/Negative ボタンのクリックリスナー.
+     * Positive/Negative/Neutral ボタンのクリックリスナー.
      * <p>Event Tracking を行います。</p>
      * <ul>
      * <li>Category: Dialog</li>
@@ -490,13 +489,33 @@ public class AkDialogFragment extends DialogFragment {
         @Override
         public final void onClick(@NonNull DialogInterface dialog, int which) {
             AlertDialog alertDialog = (AlertDialog) dialog;
-            if (btnTextResId > 0) {
-                Context context = alertDialog.getContext();
-                Log.i(TAG, "Event tracking: " + title + " [" + context.getString(btnTextResId) + "]");
+            ListView listView = alertDialog.getListView();
+            if (listView != null) {
+                int position = listView.getCheckedItemPosition();
+                if (position != ListView.INVALID_POSITION) {
+                    String checkedItem = (String) listView.getAdapter().getItem(position);
+                    if (!TextUtils.isEmpty(checkedItem)) {
+                        Log.i(TAG, "Event tracking: " + title + " [" + position + ":" + checkedItem + "]");
+                    }
+
+                    Bundle params = getParams();
+                    if (params == null) {
+                        params = new Bundle();
+                    }
+                    params.putInt(PARAM_CHECKED_ITEM, position);
+                    params.putString(PARAM_CHECKED_ITEM_VALUE, checkedItem);
+                    args.putBundle(ARGS_PARAMS, params);
+                }
+                super.onClick(dialog, which);
             } else {
-                Log.w(TAG, "Event tracking has been disabled: btnTextResId is StringRes");
+                if (btnTextResId > 0) {
+                    Context context = alertDialog.getContext();
+                    Log.i(TAG, "Event tracking: " + title + " [" + context.getString(btnTextResId) + "]");
+                } else {
+                    Log.w(TAG, "Event tracking has been disabled: btnTextResId is StringRes");
+                }
+                super.onClick(dialog, which);
             }
-            super.onClick(dialog, which);
         }
     }
 }
