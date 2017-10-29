@@ -129,6 +129,7 @@ public class AkDialogFragment extends DialogFragment {
                 args.putBundle(ARGS_PARAMS, p);
 
                 callback.onAkDialogClicked(requestCode, Activity.RESULT_OK, p);
+                dismiss();
             });
             builder.setView(view);
         }
