@@ -21,7 +21,72 @@
     <string name="button_activity_txt_flat_button">ボタン</string>
     <string name="button_activity_txt_flat_button_disabled">ボタン(不可)</string>
 
-    <string name="switch_activity_title">Switches</string>
+    <string name="dialog_activity_title">Dialogs</string>
+    <string name="dialog_activity_subtitle">A:Alert, C:Confirmation, S:Simple, I:ItemList</string>
+
+    <!-- Dialog -->
+    <string name="dialog_1_alert_title">[Side-by-side|None] Googleの位置情報サービスを使用しますか？</string>
+    <string name="dialog_1_alert_msg">Googleがアプリの位置特定を手伝うようにしましょう。これは、アプリが実行されていないときに匿名の位置データをGoogleに送信することを意味します。</string>
+    <string name="dialog_1_alert_btn_positive">同意する</string>
+    <string name="dialog_1_alert_btn_negative">同意しない</string>
+    <string name="dialog_2_alert_title">[Side-by-side|Default] Googleの位置情報サービスを使用しますか？</string>
+    <string name="dialog_2_alert_msg">@string/dialog_1_alert_title</string>
+    <string name="dialog_2_alert_btn_positive">@string/dialog_1_alert_btn_positive</string>
+    <string name="dialog_2_alert_btn_negative">@string/dialog_1_alert_btn_negative</string>
+    <string name="dialog_3_alert_title">[Side-by-side|Warn] Googleの位置情報サービスを使用しますか？</string>
+    <string name="dialog_3_alert_msg">@string/dialog_1_alert_title</string>
+    <string name="dialog_3_alert_btn_positive">@string/dialog_1_alert_btn_positive</string>
+    <string name="dialog_3_alert_btn_negative">@string/dialog_1_alert_btn_negative</string>
+    <string name="dialog_4_alert_title">[Stacked full-width|None] Googleの位置情報サービスを使用しますか？</string>
+    <string name="dialog_4_alert_msg">Googleがアプリの位置特定を手伝うようにしましょう。これは、アプリが実行されていないときに匿名の位置データをGoogleに送信することを意味します。</string>
+    <string name="dialog_4_alert_btn_positive">スピードブーストを有効にする</string>
+    <string name="dialog_4_alert_btn_negative">いいえ、結構です</string>
+    <string name="dialog_5_alert_title">[Stacked full-width|Default] Googleの位置情報サービスを使用しますか？</string>
+    <string name="dialog_5_alert_msg">@string/dialog_4_alert_title</string>
+    <string name="dialog_5_alert_btn_positive">@string/dialog_4_alert_btn_positive</string>
+    <string name="dialog_5_alert_btn_negative">@string/dialog_4_alert_btn_negative</string>
+    <string name="dialog_6_alert_title">[Stacked full-width|Warn] Googleの位置情報サービスを使用しますか？</string>
+    <string name="dialog_6_alert_msg">@string/dialog_4_alert_title</string>
+    <string name="dialog_6_alert_btn_positive">@string/dialog_4_alert_btn_positive</string>
+    <string name="dialog_6_alert_btn_negative">@string/dialog_4_alert_btn_negative</string>
+    <string name="dialog_7_confirmation_title">[None] 着信音</string>
+    <string-array name="dialog_7_confirmation_items">
+        <item>なし</item>
+        <item>きらめき</item>
+        <item>さざ波</item>
+        <item>スターゲイズ</item>
+        <item>チャイム</item>
+        <item>レーダー</item>
+        <item>信号</item>
+    </string-array>
+    <string name="dialog_8_confirmation_title">[Default] 着信音</string>
+    <string-array name="dialog_8_confirmation_items">
+        <item>なし</item>
+        <item>きらめき</item>
+        <item>さざ波</item>
+        <item>スターゲイズ</item>
+        <item>チャイム</item>
+        <item>レーダー</item>
+        <item>信号</item>
+    </string-array>
+    <string name="dialog_9_simple_title">シンプルなダイアログ。選択してください</string>
+    <string-array name="dialog_9_simple_items">
+        <item>短い項目1</item>
+        <item>長い項目(1行で収まらない場合にはテキストは折り返される)</item>
+        <item>とても長い項目(更に長くなってしまう場合でももちろんテキストは折り返される)</item>
+        <item>短い項目2</item>
+    </string-array>
+    <string name="dialog_10_item_list_title">バックアップ アカウントを設定する</string>
+    <string-array name="dialog_10_item_list_items">
+        <item>taro@example.com</item>
+        <item>jiro@example.com</item>
+        <item>hanako@example.com</item>
+        <item>アカウントを追加する</item>
+    </string-array>
+
+    <!-- Button -->
+    <string name="btn_label_ok">OK</string>
+    <string name="btn_label_cancel">キャンセル</string>
 
     <!-- Toast -->
     <string name="toast_pressed_menu_item_msg">メニューから選択されました</string>

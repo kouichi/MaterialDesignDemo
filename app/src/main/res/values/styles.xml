@@ -19,7 +19,6 @@
 
         <!-- Customized Styles -->
         <item name="toolbarStyle">@style/_MyWidget.Toolbar</item>
-
         <item name="switchStyle">@style/_MyTextAppearance.Widget.Switch</item>
     </style>
 
@@ -60,6 +59,21 @@
         <item name="android:textColor">@color/button_text_color</item>
     </style>
 
+    <style name="MyWidget.Button.Borderless.Warn">
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <!-- ===== Dialog ======================================== -->
+
+    <style name="MyThemeOverlay.Dialog.Alert" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/MyWidget.Button.Borderless</item>
+        <item name="buttonBarNegativeButtonStyle">@style/MyWidget.Button.Borderless</item>
+        <item name="buttonBarNeutralButtonStyle">@style/MyWidget.Button.Borderless</item>
+    </style>
+
+    <style name="MyThemeOverlay.Dialog.Alert.Warn">
+        <item name="buttonBarPositiveButtonStyle">@style/MyWidget.Button.Borderless.Warn</item>
+    </style>
 
     <!-- ===== Switch ======================================== -->
 

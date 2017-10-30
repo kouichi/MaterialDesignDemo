@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SimpleListAdapter.Item[] items = {
-                new SimpleListAdapter.Item("Buttons")
+                new SimpleListAdapter.Item("Buttons"),
+                new SimpleListAdapter.Item("Dialog"),
         };
         SimpleListAdapter adapter = new SimpleListAdapter(this, items);
 
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     startNextActivity(ButtonActivity.class, view);
+                    break;
+                case 1:
+                    startNextActivity(DialogActivity.class, view);
                     break;
                 default:
                     break;
