@@ -3,9 +3,7 @@ package jp.aknot.materialdesigndemo;
 import static jp.aknot.materialdesigndemo.helper.DialogResHolder.UNKNOWN_RES_ID;
 
 import android.content.DialogInterface;
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -16,8 +14,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.aknot.materialdesigndemo.adapter.IconListAdapter;
 import jp.aknot.materialdesigndemo.adapter.SimpleListAdapter;
+import jp.aknot.materialdesigndemo.helper.AkDialogHelper;
 import jp.aknot.materialdesigndemo.helper.AlertDialogResHolder;
 import jp.aknot.materialdesigndemo.helper.ConfirmationDialogResHolder;
 import jp.aknot.materialdesigndemo.helper.DialogResHolder;
@@ -103,66 +101,8 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
-            DialogResHolder baseHolder = DIALOG_RES_HOLDERS[position];
-            int dialogId = position;
-            if (baseHolder instanceof AlertDialogResHolder) {
-                AlertDialogResHolder holder = (AlertDialogResHolder) baseHolder;
-                new AkDialogFragment.Builder(this, true)
-                        .theme(holder.themeResId)
-                        .title(holder.titleResId)
-                        .message(holder.msgResId)
-                        .positiveButton(holder.positiveBtnTextResId)
-                        .negativeButton(holder.negativeBtnTextResId)
-                        .neutralButton(holder.neutralBtnTextResId)
-                        .cancelable(false)  // Alert は、選択は必須
-                        .dialogId(dialogId)
-                        .show();
-            } else if (baseHolder instanceof ConfirmationDialogResHolder) {
-                ConfirmationDialogResHolder holder = (ConfirmationDialogResHolder) baseHolder;
-                new AkDialogFragment.Builder(this, true)
-                        .theme(holder.themeResId)
-                        .title(holder.titleResId)
-                        .singleChoiceItems(holder.itemsResId)
-                        .okButton()
-                        .cancelButton()
-                        .dialogId(dialogId)
-                        .show();
-            } else if (baseHolder instanceof SimpleDialogResHolder) {
-                SimpleDialogResHolder holder = (SimpleDialogResHolder) baseHolder;
-                new AkDialogFragment.Builder(this, true)
-                        .theme(holder.themeResId)
-                        .title(holder.titleResId)
-                        .items(holder.itemsResId)
-                        .dialogId(dialogId)
-                        .show();
-            } else if (baseHolder instanceof ItemListDialogResHolder) {
-                ItemListDialogResHolder holder = (ItemListDialogResHolder) baseHolder;
-                List<IconListAdapter.Item> iconItemList = new ArrayList<>();
-                TypedArray drawableTypedArray = getResources().obtainTypedArray(holder.itemDrawablesResId);
-                TypedArray stringTypedArray = getResources().obtainTypedArray(holder.itemsResId);
-                try {
-                    int length = drawableTypedArray.length();
-                    for (int i = 0; i < length; i++) {
-                        @DrawableRes int drawableResId = drawableTypedArray.getResourceId(i, DialogResHolder.UNKNOWN_RES_ID);
-                        String title = stringTypedArray.getString(i);
-                        if (TextUtils.isEmpty(title)) {
-                            continue;
-                        }
-                        iconItemList.add(new IconListAdapter.Item(drawableResId, title));
-                    }
-                } finally {
-                    drawableTypedArray.recycle();
-                    stringTypedArray.recycle();
-                }
-                IconListAdapter.Item[] iconItems = iconItemList.toArray(new IconListAdapter.Item[iconItemList.size()]);
-
-                new AkDialogFragment.Builder(this, true)
-                        .theme(holder.themeResId)
-                        .title(holder.titleResId)
-                        .iconItems(iconItems)
-                        .dialogId(dialogId)
-                        .show();
-            }
+            DialogResHolder dialogResHolder = DIALOG_RES_HOLDERS[position];
+            AkDialogHelper.showDialog(this, position, dialogResHolder);
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
