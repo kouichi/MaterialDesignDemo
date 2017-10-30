@@ -189,11 +189,6 @@ public class AkDialogFragment extends DialogFragment {
     }
 
     public interface Callback {
-        /**
-         * @param requestCode Request Code
-         * @param resultCode  Result Code(選択したボタンの識別子)
-         * @param params      Parameters
-         */
         void onAkDialogClicked(int requestCode, int resultCode, Bundle params);
 
         void onAkDialogCancelled(int requestCode, Bundle params);
@@ -465,7 +460,17 @@ public class AkDialogFragment extends DialogFragment {
             AlertDialog alertDialog = (AlertDialog) dialog;
             if (itemsResId > 0) {
                 Context context = alertDialog.getContext();
-                Log.i(TAG, "Event tracking: " + title + " [" + context.getResources().getStringArray(itemsResId)[which] + "]");
+                String checkedItem = context.getResources().getStringArray(itemsResId)[which];
+                Log.i(TAG, "Event tracking: " + title + " [" + checkedItem + "]");
+
+                Bundle p = new Bundle();
+                Bundle params = getParams();
+                if (params != null) {
+                    p = new Bundle(params);
+                }
+                p.putInt(PARAM_CHECKED_ITEM_ID, which);
+                p.putString(PARAM_CHECKED_ITEM_VALUE, checkedItem);
+                args.putBundle(ARGS_PARAMS, p);
             } else {
                 Log.w(TAG, "Event tracking has been disabled: itemsResId is ArrayRes");
             }
@@ -505,9 +510,7 @@ public class AkDialogFragment extends DialogFragment {
                 int position = listView.getCheckedItemPosition();
                 if (position != ListView.INVALID_POSITION) {
                     String checkedItem = (String) listView.getAdapter().getItem(position);
-                    if (!TextUtils.isEmpty(checkedItem)) {
-                        Log.i(TAG, "Event tracking: " + title + " [" + position + ":" + checkedItem + "]");
-                    }
+                    Log.i(TAG, "Event tracking: " + title + " [" + position + ":" + checkedItem + "]");
 
                     Bundle p = new Bundle();
                     Bundle params = getParams();

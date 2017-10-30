@@ -2,6 +2,7 @@ package jp.aknot.materialdesigndemo;
 
 import static jp.aknot.materialdesigndemo.helper.DialogResHolder.UNKNOWN_RES_ID;
 
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +109,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
             DialogResHolder baseHolder = DIALOG_RES_HOLDERS[position];
+            int requestCode = position;
             if (baseHolder instanceof AlertDialogResHolder) {
                 AlertDialogResHolder holder = (AlertDialogResHolder) baseHolder;
                 new AkDialogFragment.Builder(this, true)
@@ -117,6 +120,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         .negativeButton(holder.negativeBtnTextResId)
                         .neutralButton(holder.neutralBtnTextResId)
                         .cancelable(false)  // Alert は、選択は必須
+                        .requestCode(requestCode)
                         .show();
             } else if (baseHolder instanceof ConfirmationDialogResHolder) {
                 ConfirmationDialogResHolder holder = (ConfirmationDialogResHolder) baseHolder;
@@ -126,6 +130,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         .singleChoiceItems(holder.itemsResId)
                         .okButton()
                         .cancelButton()
+                        .requestCode(requestCode)
                         .show();
             } else if (baseHolder instanceof SimpleDialogResHolder) {
                 SimpleDialogResHolder holder = (SimpleDialogResHolder) baseHolder;
@@ -133,6 +138,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         .theme(holder.themeResId)
                         .title(holder.titleResId)
                         .items(holder.itemsResId)
+                        .requestCode(requestCode)
                         .show();
             } else if (baseHolder instanceof ItemListDialogResHolder) {
                 ItemListDialogResHolder holder = (ItemListDialogResHolder) baseHolder;
@@ -159,6 +165,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         .theme(holder.themeResId)
                         .title(holder.titleResId)
                         .iconItems(iconItems)
+                        .requestCode(requestCode)
                         .show();
             }
         });
@@ -171,10 +178,66 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
     @Override
     public void onAkDialogClicked(int requestCode, int resultCode, Bundle params) {
         Log.d(TAG, "onAkDialogClicked: requestCode=" + requestCode + ", resultCode=" + resultCode + ", params=" + params);
+        String action = null;
+        switch (requestCode) {
+            case 0: // Alert
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                switch (resultCode) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        action = "pressed Positive Button";
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        action = "pressed Negative Button";
+                        break;
+                    case DialogInterface.BUTTON_NEUTRAL:
+                        action = "pressed Neutral Button";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 6: // Confirmation
+            case 7:
+                switch (resultCode) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        int checkedItemId = params.getInt(AkDialogFragment.PARAM_CHECKED_ITEM_ID);
+                        String checkedItemValue = params.getString(AkDialogFragment.PARAM_CHECKED_ITEM_VALUE);
+                        action = "checked " + checkedItemId + ":" + checkedItemValue + " and pressed Positive Button";
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        action = "pressed Negative Button";
+                        break;
+                    case DialogInterface.BUTTON_NEUTRAL:
+                        action = "pressed Neutral Button";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 8: // Simple
+            case 9: // ItemList
+                if (params != null) {
+                    int checkedItemId = params.getInt(AkDialogFragment.PARAM_CHECKED_ITEM_ID);
+                    String checkedItemValue = params.getString(AkDialogFragment.PARAM_CHECKED_ITEM_VALUE);
+                    action = "checked " + checkedItemId + ":" + checkedItemValue;
+                }
+                break;
+            default:
+                break;
+        }
+        String text = "[requestCode:" + requestCode + "] " + action;
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        Log.d(TAG, text);
     }
 
     @Override
     public void onAkDialogCancelled(int requestCode, Bundle params) {
-        Log.d(TAG, "onAkDialogCancelled: requestCode=" + requestCode + ", params=" + params);
+        String text = "[requestCode:" + requestCode + "] Cancelled";
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        Log.d(TAG, text);
     }
 }
