@@ -28,11 +28,6 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
 
     private static final String TAG = "@" + DialogActivity.class.getSimpleName();
 
-    private static final int REQ_POSITIVE_NEGATIVE_BUTTONS_CODE = 1;
-    private static final int REQ_STACKED_FULL_WIDTH_BUTTONS_CODE = 2;
-    private static final int REQ_SINGLE_CHOICES_ITEMS_CODE = 3;
-    private static final int REQ_ICON_ITEMS_CODE = 4;
-
     private static final DialogResHolder[] DIALOG_RES_HOLDERS;
 
     static {
@@ -109,7 +104,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
             DialogResHolder baseHolder = DIALOG_RES_HOLDERS[position];
-            int requestCode = position;
+            int dialogId = position;
             if (baseHolder instanceof AlertDialogResHolder) {
                 AlertDialogResHolder holder = (AlertDialogResHolder) baseHolder;
                 new AkDialogFragment.Builder(this, true)
@@ -120,7 +115,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         .negativeButton(holder.negativeBtnTextResId)
                         .neutralButton(holder.neutralBtnTextResId)
                         .cancelable(false)  // Alert は、選択は必須
-                        .requestCode(requestCode)
+                        .dialogId(dialogId)
                         .show();
             } else if (baseHolder instanceof ConfirmationDialogResHolder) {
                 ConfirmationDialogResHolder holder = (ConfirmationDialogResHolder) baseHolder;
@@ -130,7 +125,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         .singleChoiceItems(holder.itemsResId)
                         .okButton()
                         .cancelButton()
-                        .requestCode(requestCode)
+                        .dialogId(dialogId)
                         .show();
             } else if (baseHolder instanceof SimpleDialogResHolder) {
                 SimpleDialogResHolder holder = (SimpleDialogResHolder) baseHolder;
@@ -138,7 +133,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         .theme(holder.themeResId)
                         .title(holder.titleResId)
                         .items(holder.itemsResId)
-                        .requestCode(requestCode)
+                        .dialogId(dialogId)
                         .show();
             } else if (baseHolder instanceof ItemListDialogResHolder) {
                 ItemListDialogResHolder holder = (ItemListDialogResHolder) baseHolder;
@@ -165,7 +160,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         .theme(holder.themeResId)
                         .title(holder.titleResId)
                         .iconItems(iconItems)
-                        .requestCode(requestCode)
+                        .dialogId(dialogId)
                         .show();
             }
         });
@@ -176,10 +171,10 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
     }
 
     @Override
-    public void onAkDialogClicked(int requestCode, int resultCode, Bundle params) {
-        Log.d(TAG, "onAkDialogClicked: requestCode=" + requestCode + ", resultCode=" + resultCode + ", params=" + params);
+    public void onAkDialogClicked(int dialogId, int resultCode, Bundle params) {
+        Log.d(TAG, "onAkDialogClicked: dialogId=" + dialogId + ", resultCode=" + resultCode + ", params=" + params);
         String action = null;
-        switch (requestCode) {
+        switch (dialogId) {
             case 0: // Alert
             case 1:
             case 2:
@@ -229,14 +224,14 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
             default:
                 break;
         }
-        String text = "[requestCode:" + requestCode + "] " + action;
+        String text = "[dialogId:" + dialogId + "] " + action;
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
         Log.d(TAG, text);
     }
 
     @Override
-    public void onAkDialogCancelled(int requestCode, Bundle params) {
-        String text = "[requestCode:" + requestCode + "] Cancelled";
+    public void onAkDialogCancelled(int dialogId, Bundle params) {
+        String text = "[dialogId:" + dialogId + "] Cancelled";
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
         Log.d(TAG, text);
     }

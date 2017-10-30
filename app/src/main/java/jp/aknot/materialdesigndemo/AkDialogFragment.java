@@ -1,6 +1,7 @@
 package jp.aknot.materialdesigndemo;
 
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_CANCELABLE;
+import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_DIALOG_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_EVENT_TRACKING_ENABLED;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_ITEMS_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_RES_ID;
@@ -10,7 +11,6 @@ import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEGATIVE
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEUTRAL_BTN_TEXT_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_PARAMS;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_POSITIVE_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_REQUEST_CODE;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_SINGLE_CHOICE_ITEMS_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_THEME_RES_ID;
 import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_TITLE;
@@ -89,7 +89,7 @@ public class AkDialogFragment extends DialogFragment {
         final boolean cancelable = args.getBoolean(ARGS_CANCELABLE);
 
         final Bundle params = args.getBundle(ARGS_PARAMS);
-        final int requestCode = args.getInt(ARGS_REQUEST_CODE);
+        final int dialogId = args.getInt(ARGS_DIALOG_ID);
 
         this.eventTrackingEnabled = args.getBoolean(ARGS_EVENT_TRACKING_ENABLED);
 
@@ -132,7 +132,7 @@ public class AkDialogFragment extends DialogFragment {
                 p.putString(PARAM_CHECKED_ITEM_VALUE, item.title);
                 args.putBundle(ARGS_PARAMS, p);
 
-                callback.onAkDialogClicked(requestCode, Activity.RESULT_OK, p);
+                callback.onAkDialogClicked(dialogId, Activity.RESULT_OK, p);
                 dismiss();
             });
             builder.setView(view);
@@ -169,9 +169,9 @@ public class AkDialogFragment extends DialogFragment {
         super.onCancel(dialog);
 
         Bundle args = getArguments();
-        int requestCode = args.getInt(ARGS_REQUEST_CODE);
+        int dialogId = args.getInt(ARGS_DIALOG_ID);
         Bundle params = args.getBundle(ARGS_PARAMS);
-        callback.onAkDialogCancelled(requestCode, params);
+        callback.onAkDialogCancelled(dialogId, params);
     }
 
     private DialogInterface.OnClickListener wrapOnItemClickListenerIfNeeds(@Nullable String title, @ArrayRes int itemsResId, @NonNull Bundle args) {
@@ -189,9 +189,9 @@ public class AkDialogFragment extends DialogFragment {
     }
 
     public interface Callback {
-        void onAkDialogClicked(int requestCode, int resultCode, Bundle params);
+        void onAkDialogClicked(int dialogId, int resultCode, Bundle params);
 
-        void onAkDialogCancelled(int requestCode, Bundle params);
+        void onAkDialogCancelled(int dialogId, Bundle params);
     }
 
     public static class Builder {
@@ -208,7 +208,7 @@ public class AkDialogFragment extends DialogFragment {
         public static final String ARGS_NEUTRAL_BTN_TEXT_RES_ID = "neutralBtnTextResId";
         public static final String ARGS_CANCELABLE = "cancelable";
         public static final String ARGS_PARAMS = "params";
-        public static final String ARGS_REQUEST_CODE = "requestCode";
+        public static final String ARGS_DIALOG_ID = "dialogId";
         public static final String ARGS_EVENT_TRACKING_ENABLED = "eventTrackingEnabled";
 
         static final int UNKNOWN_RES_ID = 0;
@@ -245,7 +245,7 @@ public class AkDialogFragment extends DialogFragment {
         @StringRes
         int neutralBtnTextResId = UNKNOWN_RES_ID;
 
-        int requestCode = -1;
+        int dialogId = -1;
 
         Bundle params;
 
@@ -356,8 +356,8 @@ public class AkDialogFragment extends DialogFragment {
             return negativeButton(R.string.btn_label_cancel);
         }
 
-        public Builder requestCode(int requestCode) {
-            this.requestCode = requestCode;
+        public Builder dialogId(int dialogId) {
+            this.dialogId = dialogId;
             return this;
         }
 
@@ -396,7 +396,7 @@ public class AkDialogFragment extends DialogFragment {
             if (params != null) {
                 args.putBundle(ARGS_PARAMS, params);
             }
-            args.putInt(ARGS_REQUEST_CODE, requestCode);
+            args.putInt(ARGS_DIALOG_ID, dialogId);
             args.putBoolean(ARGS_EVENT_TRACKING_ENABLED, eventTrackingEnabled);
 
             final AkDialogFragment fragment = new AkDialogFragment();
@@ -421,13 +421,13 @@ public class AkDialogFragment extends DialogFragment {
             return args.getBundle(ARGS_PARAMS);
         }
 
-        private int getRequestCode() {
-            return args.getInt(ARGS_REQUEST_CODE);
+        private int getDialogId() {
+            return args.getInt(ARGS_DIALOG_ID);
         }
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            callback.onAkDialogClicked(getRequestCode(), which, getParams());
+            callback.onAkDialogClicked(getDialogId(), which, getParams());
         }
     }
 
