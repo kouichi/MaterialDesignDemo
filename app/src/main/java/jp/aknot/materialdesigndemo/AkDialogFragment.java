@@ -257,8 +257,6 @@ public class AkDialogFragment extends DialogFragment {
             this(activity, false);
         }
 
-        // ------
-
         public <A extends AppCompatActivity & Callback> Builder(@NonNull final A activity, boolean eventTrackingEnabled) {
             this.activity = activity;
             this.eventTrackingEnabled = eventTrackingEnabled;
@@ -284,7 +282,9 @@ public class AkDialogFragment extends DialogFragment {
 
         @NonNull
         public Builder title(@StringRes int titleResId, @NonNull Object... formatArgs) {
-            this.title = getContext().getString(titleResId, formatArgs);
+            if (titleResId != UNKNOWN_RES_ID) {
+                this.title = getContext().getString(titleResId, formatArgs);
+            }
             return this;
         }
 
@@ -293,14 +293,12 @@ public class AkDialogFragment extends DialogFragment {
             return this;
         }
 
-        // ------
-
         public Builder message(@StringRes int messageResId, Object... formatArgs) {
-            this.message = getContext().getString(messageResId, formatArgs);
+            if (messageResId != UNKNOWN_RES_ID) {
+                this.message = getContext().getString(messageResId, formatArgs);
+            }
             return this;
         }
-
-        // ------
 
         /**
          * Simple Dialog.
