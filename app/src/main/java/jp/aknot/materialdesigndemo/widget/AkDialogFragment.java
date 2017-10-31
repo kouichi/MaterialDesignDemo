@@ -43,10 +43,13 @@ import jp.aknot.materialdesigndemo.presentation.adapter.IconListAdapter;
 
 public class AkDialogFragment extends DialogFragment {
 
+    private static final String TAG = "@" + AkDialogFragment.class.getSimpleName();
+
+    public static final String PARAM_ERROR = "dialog:error";
+
     public static final String PARAM_CHECKED_ITEM_ID = "dialog:checkedItemId";
     public static final String PARAM_CHECKED_ITEM_VALUE = "dialog:checkedItemValue";
-    public static final String PARAM_ERROR = "dialog:error";
-    private static final String TAG = "@" + AkDialogFragment.class.getSimpleName();
+
     private boolean eventTrackingEnabled;
 
     private Callback callback;
