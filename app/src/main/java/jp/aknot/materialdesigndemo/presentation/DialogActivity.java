@@ -103,8 +103,9 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
-            DialogResHolder dialogResHolder = DIALOG_RES_HOLDERS[position];
-            AkDialogHelper.showDialog(this, position, dialogResHolder);
+            int dialogId = position + 1;
+            DialogResHolder dialogResHolder = DIALOG_RES_HOLDERS[dialogId];
+            AkDialogHelper.showDialog(this, dialogId, dialogResHolder);
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
