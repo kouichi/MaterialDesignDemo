@@ -1,20 +1,20 @@
-package jp.aknot.materialdesigndemo;
+package jp.aknot.materialdesigndemo.widget;
 
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_CANCELABLE;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_DIALOG_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_EVENT_TRACKING_ENABLED;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_ITEMS_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ITEMS_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_MESSAGE;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEGATIVE_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEUTRAL_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_PARAMS;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_POSITIVE_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_SINGLE_CHOICE_ITEMS_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_THEME_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_TITLE;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.UNKNOWN_RES_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_CANCELABLE;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_DIALOG_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_EVENT_TRACKING_ENABLED;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_ICON_ITEMS_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_ICON_RES_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_ITEMS_RES_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_MESSAGE;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_NEGATIVE_BTN_TEXT_RES_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_NEUTRAL_BTN_TEXT_RES_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_PARAMS;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_POSITIVE_BTN_TEXT_RES_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_SINGLE_CHOICE_ITEMS_RES_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_THEME_RES_ID;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_TITLE;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.UNKNOWN_RES_ID;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -38,7 +38,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import jp.aknot.materialdesigndemo.adapter.IconListAdapter;
+import jp.aknot.materialdesigndemo.R;
+import jp.aknot.materialdesigndemo.presentation.adapter.IconListAdapter;
 
 public class AkDialogFragment extends DialogFragment {
 

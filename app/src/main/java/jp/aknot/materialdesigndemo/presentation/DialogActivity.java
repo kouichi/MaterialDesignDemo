@@ -1,6 +1,6 @@
-package jp.aknot.materialdesigndemo;
+package jp.aknot.materialdesigndemo.presentation;
 
-import static jp.aknot.materialdesigndemo.helper.DialogResHolder.UNKNOWN_RES_ID;
+import static jp.aknot.materialdesigndemo.widget.helper.DialogResHolder.UNKNOWN_RES_ID;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,13 +14,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.aknot.materialdesigndemo.adapter.SimpleListAdapter;
-import jp.aknot.materialdesigndemo.helper.AkDialogHelper;
-import jp.aknot.materialdesigndemo.helper.AlertDialogResHolder;
-import jp.aknot.materialdesigndemo.helper.ConfirmationDialogResHolder;
-import jp.aknot.materialdesigndemo.helper.DialogResHolder;
-import jp.aknot.materialdesigndemo.helper.ItemListDialogResHolder;
-import jp.aknot.materialdesigndemo.helper.SimpleDialogResHolder;
+import jp.aknot.materialdesigndemo.R;
+import jp.aknot.materialdesigndemo.presentation.adapter.SimpleListAdapter;
+import jp.aknot.materialdesigndemo.widget.AkDialogFragment;
+import jp.aknot.materialdesigndemo.widget.helper.AkDialogHelper;
+import jp.aknot.materialdesigndemo.widget.helper.AlertDialogResHolder;
+import jp.aknot.materialdesigndemo.widget.helper.ConfirmationDialogResHolder;
+import jp.aknot.materialdesigndemo.widget.helper.DialogResHolder;
+import jp.aknot.materialdesigndemo.widget.helper.ItemListDialogResHolder;
+import jp.aknot.materialdesigndemo.widget.helper.SimpleDialogResHolder;
 
 public class DialogActivity extends AppCompatActivity implements AkDialogFragment.Callback {
 

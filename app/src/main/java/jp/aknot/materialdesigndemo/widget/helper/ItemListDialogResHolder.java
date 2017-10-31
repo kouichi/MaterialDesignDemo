@@ -1,4 +1,4 @@
-package jp.aknot.materialdesigndemo.helper;
+package jp.aknot.materialdesigndemo.widget.helper;
 
 import android.support.annotation.ArrayRes;
 import android.support.annotation.StringRes;

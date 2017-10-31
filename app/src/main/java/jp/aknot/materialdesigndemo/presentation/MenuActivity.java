@@ -1,9 +1,11 @@
-package jp.aknot.materialdesigndemo;
+package jp.aknot.materialdesigndemo.presentation;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
+
+import jp.aknot.materialdesigndemo.R;
 
 public class MenuActivity extends AppCompatActivity {
 

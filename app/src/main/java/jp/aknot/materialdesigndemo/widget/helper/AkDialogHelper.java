@@ -1,4 +1,4 @@
-package jp.aknot.materialdesigndemo.helper;
+package jp.aknot.materialdesigndemo.widget.helper;
 
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -10,8 +10,8 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.aknot.materialdesigndemo.AkDialogFragment;
-import jp.aknot.materialdesigndemo.adapter.IconListAdapter;
+import jp.aknot.materialdesigndemo.presentation.adapter.IconListAdapter;
+import jp.aknot.materialdesigndemo.widget.AkDialogFragment;
 
 public final class AkDialogHelper {
 
