@@ -178,6 +178,7 @@ public class AkDialogFragment extends DialogFragment {
         callback.onAkDialogCancelled(dialogId, params);
     }
 
+    @NonNull
     private DialogInterface.OnClickListener wrapOnItemClickListenerIfNeeds(@Nullable String title, @ArrayRes int itemsResId, @NonNull Bundle args) {
         if (eventTrackingEnabled) {
             return new OnItemClickListener(title, itemsResId, callback, args);
@@ -185,6 +186,7 @@ public class AkDialogFragment extends DialogFragment {
         return new OnClickListener(callback, args);
     }
 
+    @NonNull
     private DialogInterface.OnClickListener wrapOnButtonClickListenerIfNeeds(@Nullable String title, @StringRes int buttonResId, @NonNull Bundle args) {
         if (eventTrackingEnabled) {
             return new OnButtonClickListener(title, buttonResId, callback, args);
@@ -292,11 +294,13 @@ public class AkDialogFragment extends DialogFragment {
             return this;
         }
 
+        @NonNull
         public Builder message(@NonNull String message) {
             this.message = message;
             return this;
         }
 
+        @NonNull
         public Builder message(@StringRes int messageResId, Object... formatArgs) {
             if (messageResId != UNKNOWN_RES_ID) {
                 this.message = getContext().getString(messageResId, formatArgs);
@@ -312,6 +316,7 @@ public class AkDialogFragment extends DialogFragment {
          *
          * @see <a href="https://material.io/guidelines/components/dialogs.html#dialogs-simple-dialogs">Components–Dialogs</a>
          */
+        @NonNull
         public Builder items(@ArrayRes int itemsResId) {
             this.itemsResId = itemsResId;
             return this;
@@ -325,59 +330,71 @@ public class AkDialogFragment extends DialogFragment {
          *
          * @see <a href="https://material.io/guidelines/components/dialogs.html#dialogs-confirmation-dialogs">Components–Dialogs</a>
          */
+        @NonNull
         public Builder singleChoiceItems(@ArrayRes int itemsResId) {
             this.singleChoiceItemsResId = itemsResId;
             return this;
         }
 
+        @NonNull
         public Builder iconItems(@NonNull IconListAdapter.Item[] iconItems) {
             this.iconItems = iconItems;
             return this;
         }
 
+        @NonNull
         public Builder positiveButton(@StringRes int textResId) {
             this.positiveBtnTextResId = textResId;
             return this;
         }
 
+        @NonNull
         public Builder okButton() {
             return positiveButton(R.string.btn_label_ok);
         }
 
+        @NonNull
         public Builder negativeButton(@StringRes int textResId) {
             this.negativeBtnTextResId = textResId;
             return this;
         }
 
+        @NonNull
         public Builder neutralButton(@StringRes int textResId) {
             this.neutralBtnTextResId = textResId;
             return this;
         }
 
+        @NonNull
         public Builder cancelButton() {
             return negativeButton(R.string.btn_label_cancel);
         }
 
+        @NonNull
         public Builder dialogId(int dialogId) {
             this.dialogId = dialogId;
             return this;
         }
 
+        @NonNull
         public Builder params(@NonNull Bundle params) {
             this.params = params;
             return this;
         }
 
+        @NonNull
         public Builder cancelable(boolean cancelable) {
             this.cancelable = cancelable;
             return this;
         }
 
+        @NonNull
         public Builder tag(@NonNull String tag) {
             this.tag = tag;
             return this;
         }
 
+        @NonNull
         private Context getContext() {
             return activity.getApplicationContext();
         }
