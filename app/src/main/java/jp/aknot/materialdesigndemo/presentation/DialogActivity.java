@@ -153,23 +153,23 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
             int dialogId = position + 1;
             DialogResHolder dialogResHolder = DIALOG_RES_HOLDER_MAP.get(dialogId);
-            Bundle params = new Bundle();
+            Bundle requests = new Bundle();
             if (dialogId >= DLG_11_ALERT_ID) {
                 switch (dialogId) {
                     case DLG_11_ALERT_ID:
-                        params.putStringArray(AkDialogFragment.PARAM_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
-                        params.putStringArray(AkDialogFragment.PARAM_MESSAGE_VALUE_ARRAY, new String[]{"AKNOT"});
+                        requests.putStringArray(AkDialogFragment.REQUEST_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
+                        requests.putStringArray(AkDialogFragment.REQUEST_MESSAGE_VALUE_ARRAY, new String[]{"AKNOT"});
                         break;
                     case DLG_12_CONFIRMATION_ID:
                     case DLG_13_SIMPLE_ID:
                     case DLG_14_ITEM_LIST_ID:
-                        params.putStringArray(AkDialogFragment.PARAM_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
+                        requests.putStringArray(AkDialogFragment.REQUEST_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
                         break;
                     default:
                         break;
                 }
             }
-            AkDialogHelper.showDialog(this, dialogId, dialogResHolder, params);
+            AkDialogHelper.showDialog(this, dialogId, dialogResHolder, requests);
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -178,8 +178,8 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
     }
 
     @Override
-    public void onAkDialogClicked(int dialogId, int resultCode, Bundle params) {
-        Log.d(TAG, "onAkDialogClicked: dialogId=" + dialogId + ", resultCode=" + resultCode + ", params=" + params);
+    public void onAkDialogClicked(int dialogId, int resultCode, Bundle responses) {
+        Log.d(TAG, "onAkDialogClicked: dialogId=" + dialogId + ", resultCode=" + resultCode + ", requests=" + responses);
         String action = null;
         switch (dialogId) {
             case DLG_1_ALERT_ID:
@@ -208,8 +208,8 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
             case DLG_12_CONFIRMATION_ID:
                 switch (resultCode) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        int checkedItemId = params.getInt(AkDialogFragment.PARAM_CHECKED_ITEM_ID);
-                        String checkedItemValue = params.getString(AkDialogFragment.PARAM_CHECKED_ITEM_VALUE);
+                        int checkedItemId = responses.getInt(AkDialogFragment.RESPONSE_CHECKED_ITEM_ID);
+                        String checkedItemValue = responses.getString(AkDialogFragment.RESPONSE_CHECKED_ITEM_VALUE);
                         action = "checked " + checkedItemId + ":" + checkedItemValue + " and pressed Positive Button";
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -226,9 +226,9 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
             case DLG_10_ITEM_LIST_ID:
             case DLG_13_SIMPLE_ID:
             case DLG_14_ITEM_LIST_ID:
-                if (params != null) {
-                    int checkedItemId = params.getInt(AkDialogFragment.PARAM_CHECKED_ITEM_ID);
-                    String checkedItemValue = params.getString(AkDialogFragment.PARAM_CHECKED_ITEM_VALUE);
+                if (responses != null) {
+                    int checkedItemId = responses.getInt(AkDialogFragment.RESPONSE_CHECKED_ITEM_ID);
+                    String checkedItemValue = responses.getString(AkDialogFragment.RESPONSE_CHECKED_ITEM_VALUE);
                     action = "checked " + checkedItemId + ":" + checkedItemValue;
                 }
                 break;
@@ -238,12 +238,14 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
         String text = "[dialogId:" + dialogId + "] " + action;
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
         Log.d(TAG, text);
+        Log.d(TAG, "responses: " + responses);
     }
 
     @Override
-    public void onAkDialogCancelled(int dialogId, Bundle params) {
+    public void onAkDialogCancelled(int dialogId, Bundle responses) {
         String text = "[dialogId:" + dialogId + "] Cancelled";
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
         Log.d(TAG, text);
+        Log.d(TAG, "responses: " + responses);
     }
 }
