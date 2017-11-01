@@ -2,6 +2,7 @@ package jp.aknot.materialdesigndemo.widget.helper;
 
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,14 +17,26 @@ import jp.aknot.materialdesigndemo.widget.AkDialogFragment;
 public final class AkDialogHelper {
 
     public static <A extends AppCompatActivity & AkDialogFragment.Callback> void showDialog(@NonNull A activity,
-            int dialogId, @NonNull DialogResHolder dialogResHolder) {
+            int dialogId, @NonNull DialogResHolder dialogResHolder, @NonNull Bundle params) {
+
+        String[] titleValueArray = params.getStringArray(AkDialogFragment.PARAM_TITLE_VALUE_ARRAY);
+        String[] messageValueArray = params.getStringArray(AkDialogFragment.PARAM_MESSAGE_VALUE_ARRAY);
+
         if (dialogResHolder instanceof AlertDialogResHolder) {
             AlertDialogResHolder holder = (AlertDialogResHolder) dialogResHolder;
-            new AkDialogFragment.Builder(activity, true)
-                    .theme(holder.themeResId)
-                    .title(holder.titleResId)
-                    .message(holder.msgResId)
-                    .positiveButton(holder.positiveBtnTextResId)
+            AkDialogFragment.Builder builder = new AkDialogFragment.Builder(activity, true)
+                    .theme(holder.themeResId);
+            if (titleValueArray != null) {
+                builder.title(holder.titleResId, titleValueArray);
+            } else {
+                builder.title(holder.titleResId);
+            }
+            if (messageValueArray != null) {
+                builder.message(holder.msgResId, messageValueArray);
+            } else {
+                builder.message(holder.msgResId);
+            }
+            builder.positiveButton(holder.positiveBtnTextResId)
                     .negativeButton(holder.negativeBtnTextResId)
                     .neutralButton(holder.neutralBtnTextResId)
                     .cancelable(false)  // Alert は、選択は必須
@@ -31,20 +44,28 @@ public final class AkDialogHelper {
                     .show();
         } else if (dialogResHolder instanceof ConfirmationDialogResHolder) {
             ConfirmationDialogResHolder holder = (ConfirmationDialogResHolder) dialogResHolder;
-            new AkDialogFragment.Builder(activity, true)
-                    .theme(holder.themeResId)
-                    .title(holder.titleResId)
-                    .singleChoiceItems(holder.itemsResId)
+            AkDialogFragment.Builder builder = new AkDialogFragment.Builder(activity, true)
+                    .theme(holder.themeResId);
+            if (titleValueArray != null) {
+                builder.title(holder.titleResId, titleValueArray);
+            } else {
+                builder.title(holder.titleResId);
+            }
+            builder.singleChoiceItems(holder.itemsResId)
                     .okButton()
                     .cancelButton()
                     .dialogId(dialogId)
                     .show();
         } else if (dialogResHolder instanceof SimpleDialogResHolder) {
             SimpleDialogResHolder holder = (SimpleDialogResHolder) dialogResHolder;
-            new AkDialogFragment.Builder(activity, true)
-                    .theme(holder.themeResId)
-                    .title(holder.titleResId)
-                    .items(holder.itemsResId)
+            AkDialogFragment.Builder builder = new AkDialogFragment.Builder(activity, true)
+                    .theme(holder.themeResId);
+            if (titleValueArray != null) {
+                builder.title(holder.titleResId, titleValueArray);
+            } else {
+                builder.title(holder.titleResId);
+            }
+            builder.items(holder.itemsResId)
                     .dialogId(dialogId)
                     .show();
         } else if (dialogResHolder instanceof ItemListDialogResHolder) {
@@ -69,10 +90,14 @@ public final class AkDialogHelper {
             }
             IconListAdapter.Item[] iconItems = iconItemList.toArray(new IconListAdapter.Item[iconItemList.size()]);
 
-            new AkDialogFragment.Builder(activity, true)
-                    .theme(holder.themeResId)
-                    .title(holder.titleResId)
-                    .iconItems(iconItems)
+            AkDialogFragment.Builder builder = new AkDialogFragment.Builder(activity, true)
+                    .theme(holder.themeResId);
+            if (titleValueArray != null) {
+                builder.title(holder.titleResId, titleValueArray);
+            } else {
+                builder.title(holder.titleResId);
+            }
+            builder.iconItems(iconItems)
                     .dialogId(dialogId)
                     .show();
         }

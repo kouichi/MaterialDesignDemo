@@ -39,6 +39,10 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
     private static final int DLG_8_CONFIRMATION_ID = 8;
     private static final int DLG_9_SIMPLE_ID = 9;
     private static final int DLG_10_ITEM_LIST_ID = 10;
+    private static final int DLG_11_ALERT_ID = 11;
+    private static final int DLG_12_CONFIRMATION_ID = 12;
+    private static final int DLG_13_SIMPLE_ID = 13;
+    private static final int DLG_14_ITEM_LIST_ID = 14;
 
     private static final SparseArray<DialogResHolder> DIALOG_RES_HOLDER_MAP = new SparseArray<>();
 
@@ -99,6 +103,26 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                 new ItemListDialogResHolder(R.string.dialog_10_item_list_title,
                         R.array.dialog_10_item_list_item_drawables,
                         R.array.dialog_10_item_list_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_11_ALERT_ID,
+                new AlertDialogResHolder(
+                        R.string.dialog_11_alert_title,
+                        R.string.dialog_11_alert_msg,
+                        R.string.dialog_11_alert_btn_positive,
+                        R.string.dialog_11_alert_btn_negative,
+                        UNKNOWN_RES_ID));
+        DIALOG_RES_HOLDER_MAP.put(DLG_12_CONFIRMATION_ID,
+                new ConfirmationDialogResHolder(
+                        R.string.dialog_12_confirmation_title,
+                        R.array.dialog_12_confirmation_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_13_SIMPLE_ID,
+                new SimpleDialogResHolder(
+                        R.string.dialog_13_simple_title,
+                        R.array.dialog_13_simple_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_14_ITEM_LIST_ID,
+                new ItemListDialogResHolder(
+                        R.string.dialog_14_item_list_title,
+                        R.array.dialog_14_item_list_item_drawables,
+                        R.array.dialog_14_item_list_items));
     }
 
     @Override
@@ -128,8 +152,24 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
             int dialogId = position + 1;
-            DialogResHolder dialogResHolder = DIALOG_RES_HOLDER_MAP.valueAt(dialogId);
-            AkDialogHelper.showDialog(this, dialogId, dialogResHolder);
+            DialogResHolder dialogResHolder = DIALOG_RES_HOLDER_MAP.get(dialogId);
+            Bundle params = new Bundle();
+            if (dialogId >= DLG_11_ALERT_ID) {
+                switch (dialogId) {
+                    case DLG_11_ALERT_ID:
+                        params.putStringArray(AkDialogFragment.PARAM_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
+                        params.putStringArray(AkDialogFragment.PARAM_MESSAGE_VALUE_ARRAY, new String[]{"AKNOT"});
+                        break;
+                    case DLG_12_CONFIRMATION_ID:
+                    case DLG_13_SIMPLE_ID:
+                    case DLG_14_ITEM_LIST_ID:
+                        params.putStringArray(AkDialogFragment.PARAM_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
+                        break;
+                    default:
+                        break;
+                }
+            }
+            AkDialogHelper.showDialog(this, dialogId, dialogResHolder, params);
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -148,6 +188,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
             case DLG_4_ALERT_ID:
             case DLG_5_ALERT_ID:
             case DLG_6_ALERT_ID:
+            case DLG_11_ALERT_ID:
                 switch (resultCode) {
                     case DialogInterface.BUTTON_POSITIVE:
                         action = "pressed Positive Button";
@@ -164,6 +205,7 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                 break;
             case DLG_7_CONFIRMATION_ID:
             case DLG_8_CONFIRMATION_ID:
+            case DLG_12_CONFIRMATION_ID:
                 switch (resultCode) {
                     case DialogInterface.BUTTON_POSITIVE:
                         int checkedItemId = params.getInt(AkDialogFragment.PARAM_CHECKED_ITEM_ID);
@@ -182,6 +224,8 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                 break;
             case DLG_9_SIMPLE_ID:
             case DLG_10_ITEM_LIST_ID:
+            case DLG_13_SIMPLE_ID:
+            case DLG_14_ITEM_LIST_ID:
                 if (params != null) {
                     int checkedItemId = params.getInt(AkDialogFragment.PARAM_CHECKED_ITEM_ID);
                     String checkedItemValue = params.getString(AkDialogFragment.PARAM_CHECKED_ITEM_VALUE);

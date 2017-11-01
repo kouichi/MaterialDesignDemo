@@ -45,6 +45,8 @@ public class AkDialogFragment extends DialogFragment {
 
     private static final String TAG = "@" + AkDialogFragment.class.getSimpleName();
 
+    public static final String PARAM_TITLE_VALUE_ARRAY = "dialog:titleValueArray";
+    public static final String PARAM_MESSAGE_VALUE_ARRAY = "dialog:messageValueArray";
     public static final String PARAM_ERROR = "dialog:error";
 
     public static final String PARAM_CHECKED_ITEM_ID = "dialog:checkedItemId";
@@ -287,9 +289,9 @@ public class AkDialogFragment extends DialogFragment {
         }
 
         @NonNull
-        public Builder title(@StringRes int titleResId, @NonNull Object... formatArgs) {
+        public Builder title(@StringRes int titleResId, @NonNull String... formatArgs) {
             if (titleResId != UNKNOWN_RES_ID) {
-                this.title = getContext().getString(titleResId, formatArgs);
+                this.title = getContext().getString(titleResId, (Object[]) formatArgs);
             }
             return this;
         }
@@ -301,9 +303,9 @@ public class AkDialogFragment extends DialogFragment {
         }
 
         @NonNull
-        public Builder message(@StringRes int messageResId, Object... formatArgs) {
+        public Builder message(@StringRes int messageResId, String... formatArgs) {
             if (messageResId != UNKNOWN_RES_ID) {
-                this.message = getContext().getString(messageResId, formatArgs);
+                this.message = getContext().getString(messageResId, (Object[]) formatArgs);
             }
             return this;
         }
