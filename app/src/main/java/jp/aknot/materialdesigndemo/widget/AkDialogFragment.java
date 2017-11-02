@@ -35,8 +35,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ListView;
+
+import java.io.Serializable;
 
 import jp.aknot.materialdesigndemo.R;
 import jp.aknot.materialdesigndemo.presentation.adapter.IconListAdapter;
@@ -44,6 +48,9 @@ import jp.aknot.materialdesigndemo.presentation.adapter.IconListAdapter;
 public class AkDialogFragment extends DialogFragment {
 
     private static final String TAG = "@" + AkDialogFragment.class.getSimpleName();
+
+    public static final String REQUEST_VIEW_MODE = "dialog:request_view_mode";
+    public static final String REQUEST_WEBVIEW_LOAD_URL = "dialog:request_webview_load_url";
 
     public static final String REQUEST_INTENT = "dialog:request_intent";
     public static final String RESPONSE_INTENT = "dialog:response_intent";
@@ -60,6 +67,12 @@ public class AkDialogFragment extends DialogFragment {
     private boolean eventTrackingEnabled;
 
     private Callback callback;
+
+    public enum ViewMode {
+        DEFAULT,
+        WEBVIEW,
+        PASSWORD_INPUT,
+    }
 
     public AkDialogFragment() {
     }
@@ -100,6 +113,13 @@ public class AkDialogFragment extends DialogFragment {
         final boolean cancelable = args.getBoolean(ARGS_CANCELABLE);
 
         final Bundle requests = args.getBundle(ARGS_REQUESTS);
+        ViewMode vm = ViewMode.DEFAULT;
+        if (requests != null) {
+            Serializable enumValue = requests.getSerializable(REQUEST_VIEW_MODE);
+            vm = enumValue != null ? (ViewMode) enumValue : ViewMode.DEFAULT;
+        }
+        final ViewMode viewMode = vm;
+
         final int dialogId = args.getInt(ARGS_DIALOG_ID);
 
         this.eventTrackingEnabled = args.getBoolean(ARGS_EVENT_TRACKING_ENABLED);
@@ -127,25 +147,48 @@ public class AkDialogFragment extends DialogFragment {
             });
         }
 
-        if (iconItems != null && iconItems.length > 0) {
-            View view = LayoutInflater.from(activity).inflate(R.layout.dialog_content_list, null);
-            ListView listView = view.findViewById(R.id.dialog_content_list_view);
-            listView.setAdapter(new IconListAdapter(activity, iconItems));
-            listView.setOnItemClickListener((parent, view1, position, id) -> {
-                IconListAdapter.Item item = (IconListAdapter.Item) parent.getItemAtPosition(position);
-                Log.d(TAG, "onItemSelected: position=" + position + ", id=" + id + ", item=" + item.title);
-
-                Bundle responses = new Bundle();
-                if (requests != null) {
-                    responses.putParcelable(RESPONSE_INTENT, requests.getParcelable(REQUEST_INTENT));
+        switch (viewMode) {
+            case WEBVIEW: {
+                String url = requests.getString(REQUEST_WEBVIEW_LOAD_URL);
+                if (TextUtils.isEmpty(url)) {
+                    throw new IllegalStateException("This following requests parameter is mandatory: " + REQUEST_WEBVIEW_LOAD_URL);
                 }
-                responses.putInt(RESPONSE_CHECKED_ITEM_ID, position);
-                responses.putString(RESPONSE_CHECKED_ITEM_VALUE, item.title);
+                View view = LayoutInflater.from(activity).inflate(R.layout.dialog_content_webview, null);
+                WebView webView = view.findViewById(R.id.dialog_content_webview);
+                webView.setWebViewClient(new WebViewClient()); // Browser 起動防止
+                webView.loadUrl(url);
+                builder.setView(view);
+                break;
+            }
+            case PASSWORD_INPUT: {
+                View view = LayoutInflater.from(activity).inflate(R.layout.dialog_content_password_input, null);
+                builder.setView(view);
+                break;
+            }
+            case DEFAULT:
+            default: {
+                if (iconItems != null && iconItems.length > 0) {
+                    View view = LayoutInflater.from(activity).inflate(R.layout.dialog_content_list, null);
+                    ListView listView = view.findViewById(R.id.dialog_content_list_view);
+                    listView.setAdapter(new IconListAdapter(activity, iconItems));
+                    listView.setOnItemClickListener((parent, view1, position, id) -> {
+                        IconListAdapter.Item item = (IconListAdapter.Item) parent.getItemAtPosition(position);
+                        Log.d(TAG, "onItemSelected: position=" + position + ", id=" + id + ", item=" + item.title);
 
-                callback.onAkDialogClicked(dialogId, Activity.RESULT_OK, responses);
-                dismiss();
-            });
-            builder.setView(view);
+                        Bundle responses = new Bundle();
+                        if (requests != null) {
+                            responses.putParcelable(RESPONSE_INTENT, requests.getParcelable(REQUEST_INTENT));
+                        }
+                        responses.putInt(RESPONSE_CHECKED_ITEM_ID, position);
+                        responses.putString(RESPONSE_CHECKED_ITEM_VALUE, item.title);
+
+                        callback.onAkDialogClicked(dialogId, Activity.RESULT_OK, responses);
+                        dismiss();
+                    });
+                    builder.setView(view);
+                }
+                break;
+            }
         }
 
         if (positiveBtnTextResId != UNKNOWN_RES_ID) {
@@ -423,9 +466,7 @@ public class AkDialogFragment extends DialogFragment {
             args.putInt(ARGS_NEGATIVE_BTN_TEXT_RES_ID, negativeBtnTextResId);
             args.putInt(ARGS_NEUTRAL_BTN_TEXT_RES_ID, neutralBtnTextResId);
             args.putBoolean(ARGS_CANCELABLE, cancelable);
-            if (requests != null) {
-                args.putBundle(ARGS_REQUESTS, requests);
-            }
+            args.putBundle(ARGS_REQUESTS, requests);
             args.putInt(ARGS_DIALOG_ID, dialogId);
             args.putBoolean(ARGS_EVENT_TRACKING_ENABLED, eventTrackingEnabled);
 

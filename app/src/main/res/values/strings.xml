@@ -107,10 +107,19 @@
         <item>hanako@example.com</item>
         <item>アカウントを追加する</item>
     </string-array>
+    <string name="dialog_15_alert_title">WebView</string>
+    <string name="dialog_15_alert_btn_positive">@string/btn_label_ok</string>
+    <string name="dialog_16_alert_title">パスワード入力</string>
+    <string name="dialog_16_alert_msg">確認のため、パスワードを入力してください。</string>
+    <string name="dialog_16_alert_btn_positive">@string/btn_label_ok</string>
+    <string name="dialog_16_alert_btn_negative">@string/btn_label_cancel</string>
 
     <!-- Button -->
     <string name="btn_label_ok">OK</string>
     <string name="btn_label_cancel">キャンセル</string>
+
+    <!-- Dialog -->
+    <string name="dialog_hint_password">パスワード</string>
 
     <!-- Toast -->
     <string name="toast_pressed_menu_item_msg">メニューから選択されました</string>

@@ -1,5 +1,7 @@
 package jp.aknot.materialdesigndemo.presentation;
 
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.REQUEST_VIEW_MODE;
+import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.REQUEST_WEBVIEW_LOAD_URL;
 import static jp.aknot.materialdesigndemo.widget.helper.DialogResHolder.UNKNOWN_RES_ID;
 
 import android.content.DialogInterface;
@@ -43,6 +45,8 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
     private static final int DLG_12_CONFIRMATION_ID = 12;
     private static final int DLG_13_SIMPLE_ID = 13;
     private static final int DLG_14_ITEM_LIST_ID = 14;
+    private static final int DLG_15_ALERT_ID = 15;
+    private static final int DLG_16_ALERT_ID = 16;
 
     private static final SparseArray<DialogResHolder> DIALOG_RES_HOLDER_MAP = new SparseArray<>();
 
@@ -123,6 +127,20 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         R.string.dialog_14_item_list_title,
                         R.array.dialog_14_item_list_item_drawables,
                         R.array.dialog_14_item_list_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_15_ALERT_ID,
+                new AlertDialogResHolder(
+                        R.string.dialog_15_alert_title,
+                        UNKNOWN_RES_ID,
+                        R.string.dialog_15_alert_btn_positive,
+                        UNKNOWN_RES_ID,
+                        UNKNOWN_RES_ID));
+        DIALOG_RES_HOLDER_MAP.put(DLG_16_ALERT_ID,
+                new AlertDialogResHolder(
+                        R.string.dialog_16_alert_title,
+                        R.string.dialog_16_alert_msg,
+                        R.string.dialog_16_alert_btn_positive,
+                        R.string.dialog_16_alert_btn_negative,
+                        UNKNOWN_RES_ID));
     }
 
     @Override
@@ -165,6 +183,13 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                     case DLG_14_ITEM_LIST_ID:
                         requests.putStringArray(AkDialogFragment.REQUEST_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
                         break;
+                    case DLG_15_ALERT_ID:
+                        requests.putSerializable(REQUEST_VIEW_MODE, AkDialogFragment.ViewMode.WEBVIEW);
+                        requests.putString(REQUEST_WEBVIEW_LOAD_URL, "https://www.google.co.jp/");
+                        break;
+                    case DLG_16_ALERT_ID:
+                        requests.putSerializable(REQUEST_VIEW_MODE, AkDialogFragment.ViewMode.PASSWORD_INPUT);
+                        break;
                     default:
                         break;
                 }
@@ -189,6 +214,8 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
             case DLG_5_ALERT_ID:
             case DLG_6_ALERT_ID:
             case DLG_11_ALERT_ID:
+            case DLG_15_ALERT_ID:
+            case DLG_16_ALERT_ID:
                 switch (resultCode) {
                     case DialogInterface.BUTTON_POSITIVE:
                         action = "pressed Positive Button";
