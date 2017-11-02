@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
@@ -17,10 +18,12 @@ import jp.aknot.materialdesigndemo.widget.AkDialogFragment;
 public final class AkDialogHelper {
 
     public static <A extends AppCompatActivity & AkDialogFragment.Callback> void showDialog(@NonNull A activity,
-            int dialogId, @NonNull DialogResHolder dialogResHolder, @NonNull Bundle requests) {
+            int dialogId, @NonNull DialogResHolder dialogResHolder, @Nullable Bundle requests) {
 
-        String[] titleValueArray = requests.getStringArray(AkDialogFragment.REQUEST_TITLE_VALUE_ARRAY);
-        String[] messageValueArray = requests.getStringArray(AkDialogFragment.REQUEST_MESSAGE_VALUE_ARRAY);
+        Bundle realRequests = requests != null ? requests : new Bundle();
+
+        String[] titleValueArray = realRequests.getStringArray(AkDialogFragment.REQUEST_TITLE_VALUE_ARRAY);
+        String[] messageValueArray = realRequests.getStringArray(AkDialogFragment.REQUEST_MESSAGE_VALUE_ARRAY);
 
         if (dialogResHolder instanceof AlertDialogResHolder) {
             AlertDialogResHolder holder = (AlertDialogResHolder) dialogResHolder;
@@ -41,7 +44,7 @@ public final class AkDialogHelper {
                     .neutralButton(holder.neutralBtnTextResId)
                     .cancelable(false)  // Alert は、選択は必須
                     .dialogId(dialogId)
-                    .requests(requests)
+                    .requests(realRequests)
                     .show();
         } else if (dialogResHolder instanceof ConfirmationDialogResHolder) {
             ConfirmationDialogResHolder holder = (ConfirmationDialogResHolder) dialogResHolder;
@@ -56,7 +59,7 @@ public final class AkDialogHelper {
                     .okButton()
                     .cancelButton()
                     .dialogId(dialogId)
-                    .requests(requests)
+                    .requests(realRequests)
                     .show();
         } else if (dialogResHolder instanceof SimpleDialogResHolder) {
             SimpleDialogResHolder holder = (SimpleDialogResHolder) dialogResHolder;
@@ -69,7 +72,7 @@ public final class AkDialogHelper {
             }
             builder.items(holder.itemsResId)
                     .dialogId(dialogId)
-                    .requests(requests)
+                    .requests(realRequests)
                     .show();
         } else if (dialogResHolder instanceof ItemListDialogResHolder) {
             ItemListDialogResHolder holder = (ItemListDialogResHolder) dialogResHolder;
@@ -102,7 +105,7 @@ public final class AkDialogHelper {
             }
             builder.iconItems(iconItems)
                     .dialogId(dialogId)
-                    .requests(requests)
+                    .requests(realRequests)
                     .show();
         }
     }
