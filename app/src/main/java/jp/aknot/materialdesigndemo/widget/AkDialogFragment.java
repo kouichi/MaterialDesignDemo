@@ -31,13 +31,16 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.io.Serializable;
@@ -162,6 +165,27 @@ public class AkDialogFragment extends DialogFragment {
             }
             case PASSWORD_INPUT: {
                 View view = LayoutInflater.from(activity).inflate(R.layout.dialog_content_password_input, null);
+                EditText editText = view.findViewById(R.id.dialog_content_password_input);
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        AlertDialog alertDialog = (AlertDialog) getDialog();
+                        Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                        if (s != null && s.length() > 0) {
+                            positiveButton.setEnabled(true);
+                        } else {
+                            positiveButton.setEnabled(false);
+                        }
+                    }
+                });
                 builder.setView(view);
                 break;
             }
@@ -207,9 +231,19 @@ public class AkDialogFragment extends DialogFragment {
         setCancelable(cancelable);
 
         dialog.setOnShowListener(dlg -> {
+            AlertDialog alertDialog = (AlertDialog) dlg;
+            Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            switch (viewMode) {
+                case PASSWORD_INPUT:
+                    positiveButton.setEnabled(false);
+                    break;
+                case DEFAULT:
+                case WEBVIEW:
+                default:
+                    break;
+            }
+
             if (singleChoiceItemsResId != UNKNOWN_RES_ID) {
-                AlertDialog alertDialog = (AlertDialog) dlg;
-                Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
                 positiveButton.setEnabled(false);
             }
         });
