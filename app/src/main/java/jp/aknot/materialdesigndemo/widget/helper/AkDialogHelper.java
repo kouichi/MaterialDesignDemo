@@ -30,14 +30,14 @@ public final class AkDialogHelper {
             AkDialogFragment.Builder builder = new AkDialogFragment.Builder(activity, true)
                     .theme(holder.themeResId);
             if (titleValueArray != null) {
-                builder.title(holder.titleResId, titleValueArray);
+                builder = builder.title(holder.titleResId, titleValueArray);
             } else {
-                builder.title(holder.titleResId);
+                builder = builder.title(holder.titleResId);
             }
             if (messageValueArray != null) {
-                builder.message(holder.msgResId, messageValueArray);
+                builder = builder.message(holder.msgResId, messageValueArray);
             } else {
-                builder.message(holder.msgResId);
+                builder = builder.message(holder.msgResId);
             }
             builder.positiveButton(holder.positiveBtnTextResId)
                     .negativeButton(holder.negativeBtnTextResId)
@@ -51,9 +51,9 @@ public final class AkDialogHelper {
             AkDialogFragment.Builder builder = new AkDialogFragment.Builder(activity, true)
                     .theme(holder.themeResId);
             if (titleValueArray != null) {
-                builder.title(holder.titleResId, titleValueArray);
+                builder = builder.title(holder.titleResId, titleValueArray);
             } else {
-                builder.title(holder.titleResId);
+                builder = builder.title(holder.titleResId);
             }
             builder.singleChoiceItems(holder.itemsResId)
                     .okButton()
@@ -66,9 +66,9 @@ public final class AkDialogHelper {
             AkDialogFragment.Builder builder = new AkDialogFragment.Builder(activity, true)
                     .theme(holder.themeResId);
             if (titleValueArray != null) {
-                builder.title(holder.titleResId, titleValueArray);
+                builder = builder.title(holder.titleResId, titleValueArray);
             } else {
-                builder.title(holder.titleResId);
+                builder = builder.title(holder.titleResId);
             }
             builder.items(holder.itemsResId)
                     .dialogId(dialogId)
@@ -99,9 +99,9 @@ public final class AkDialogHelper {
             AkDialogFragment.Builder builder = new AkDialogFragment.Builder(activity, true)
                     .theme(holder.themeResId);
             if (titleValueArray != null) {
-                builder.title(holder.titleResId, titleValueArray);
+                builder = builder.title(holder.titleResId, titleValueArray);
             } else {
-                builder.title(holder.titleResId);
+                builder = builder.title(holder.titleResId);
             }
             builder.iconItems(iconItems)
                     .dialogId(dialogId)
