@@ -1,21 +1,5 @@
 package jp.aknot.materialdesigndemo.widget;
 
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_CANCELABLE;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_DIALOG_ID;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_EVENT_TRACKING_ENABLED;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_ICON_ITEMS_ID;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_ICON_RES_ID;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_ITEMS_RES_ID;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_MESSAGE;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_NEGATIVE_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_NEUTRAL_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_POSITIVE_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_REQUESTS;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_SINGLE_CHOICE_ITEMS_RES_ID;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_THEME_RES_ID;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.ARGS_TITLE;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.Builder.UNKNOWN_RES_ID;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -66,6 +50,23 @@ public class AkDialogFragment extends DialogFragment {
     public static final String RESPONSE_CHECKED_ITEM_VALUE = "dialog:response_checked_item_value";
 
     public static final int NO_ITEM_ID = -1;
+
+    private static final String ARGS_THEME_RES_ID = "themeResId";
+    private static final String ARGS_ICON_RES_ID = "iconResId";
+    private static final String ARGS_TITLE = "title";
+    private static final String ARGS_MESSAGE = "message";
+    private static final String ARGS_ITEMS_RES_ID = "itemsResId";
+    private static final String ARGS_SINGLE_CHOICE_ITEMS_RES_ID = "singleChoiceItemsResId";
+    private static final String ARGS_ICON_ITEMS_ID = "iconItems";
+    private static final String ARGS_POSITIVE_BTN_TEXT_RES_ID = "positiveBtnTextResId";
+    private static final String ARGS_NEGATIVE_BTN_TEXT_RES_ID = "negativeBtnTextResId";
+    private static final String ARGS_NEUTRAL_BTN_TEXT_RES_ID = "neutralBtnTextResId";
+    private static final String ARGS_CANCELABLE = "cancelable";
+    private static final String ARGS_REQUESTS = "requests";
+    private static final String ARGS_DIALOG_ID = "dialogId";
+    private static final String ARGS_EVENT_TRACKING_ENABLED = "eventTrackingEnabled";
+
+    private static final int UNKNOWN_RES_ID = 0;
 
     private boolean eventTrackingEnabled;
 
@@ -290,62 +291,45 @@ public class AkDialogFragment extends DialogFragment {
 
     public static class Builder {
 
-        public static final String ARGS_THEME_RES_ID = "themeResId";
-        public static final String ARGS_ICON_RES_ID = "iconResId";
-        public static final String ARGS_TITLE = "title";
-        public static final String ARGS_MESSAGE = "message";
-        public static final String ARGS_ITEMS_RES_ID = "itemsResId";
-        public static final String ARGS_SINGLE_CHOICE_ITEMS_RES_ID = "singleChoiceItemsResId";
-        public static final String ARGS_ICON_ITEMS_ID = "iconItems";
-        public static final String ARGS_POSITIVE_BTN_TEXT_RES_ID = "positiveBtnTextResId";
-        public static final String ARGS_NEGATIVE_BTN_TEXT_RES_ID = "negativeBtnTextResId";
-        public static final String ARGS_NEUTRAL_BTN_TEXT_RES_ID = "neutralBtnTextResId";
-        public static final String ARGS_CANCELABLE = "cancelable";
-        public static final String ARGS_REQUESTS = "requests";
-        public static final String ARGS_DIALOG_ID = "dialogId";
-        public static final String ARGS_EVENT_TRACKING_ENABLED = "eventTrackingEnabled";
-
-        static final int UNKNOWN_RES_ID = 0;
-
-        final AppCompatActivity activity;
+        private final AppCompatActivity activity;
 
         /** イベントトラッキングを有効にするか否か. */
-        final boolean eventTrackingEnabled;
+        private final boolean eventTrackingEnabled;
 
         @StyleRes
-        int themeResId = UNKNOWN_RES_ID;
+        private int themeResId = UNKNOWN_RES_ID;
 
         @DrawableRes
-        int iconResId = UNKNOWN_RES_ID;
+        private int iconResId = UNKNOWN_RES_ID;
 
-        String title;
+        private String title;
 
-        String message;
-
-        @ArrayRes
-        int itemsResId = UNKNOWN_RES_ID;
+        private String message;
 
         @ArrayRes
-        int singleChoiceItemsResId = UNKNOWN_RES_ID;
+        private int itemsResId = UNKNOWN_RES_ID;
 
-        IconListAdapter.Item[] iconItems;
+        @ArrayRes
+        private int singleChoiceItemsResId = UNKNOWN_RES_ID;
 
-        @StringRes
-        int positiveBtnTextResId = UNKNOWN_RES_ID;
-
-        @StringRes
-        int negativeBtnTextResId = UNKNOWN_RES_ID;
+        private IconListAdapter.Item[] iconItems;
 
         @StringRes
-        int neutralBtnTextResId = UNKNOWN_RES_ID;
+        private int positiveBtnTextResId = UNKNOWN_RES_ID;
 
-        int dialogId = -1;
+        @StringRes
+        private int negativeBtnTextResId = UNKNOWN_RES_ID;
 
-        Bundle requests = new Bundle();
+        @StringRes
+        private int neutralBtnTextResId = UNKNOWN_RES_ID;
 
-        boolean cancelable = true;
+        private int dialogId = -1;
 
-        String tag = "default";
+        private Bundle requests = new Bundle();
+
+        private boolean cancelable = true;
+
+        private String tag = "default";
 
         public <A extends AppCompatActivity & Callback> Builder(@NonNull final A activity) {
             this(activity, false);
