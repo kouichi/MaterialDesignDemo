@@ -1,7 +1,5 @@
 package jp.aknot.materialdesigndemo.presentation;
 
-import static jp.aknot.materialdesigndemo.presentation.view.AkDialogFragment.REQUEST_VIEW_MODE;
-import static jp.aknot.materialdesigndemo.presentation.view.AkDialogFragment.REQUEST_WEBVIEW_LOAD_URL;
 import static jp.aknot.materialdesigndemo.presentation.view.helper.DialogResHolder.UNKNOWN_RES_ID;
 
 import android.content.DialogInterface;
@@ -184,11 +182,11 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         requests.putStringArray(AkDialogFragment.REQUEST_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
                         break;
                     case DLG_15_ALERT_ID:
-                        requests.putSerializable(REQUEST_VIEW_MODE, AkDialogFragment.ViewMode.WEBVIEW);
-                        requests.putString(REQUEST_WEBVIEW_LOAD_URL, "https://www.google.co.jp/");
+                        requests.putSerializable(AkDialogFragment.REQUEST_VIEW_MODE, AkDialogFragment.ViewMode.WEBVIEW);
+                        requests.putString(AkDialogFragment.REQUEST_WEBVIEW_LOAD_URL, "https://www.google.co.jp/");
                         break;
                     case DLG_16_ALERT_ID:
-                        requests.putSerializable(REQUEST_VIEW_MODE, AkDialogFragment.ViewMode.PASSWORD_INPUT);
+                        requests.putSerializable(AkDialogFragment.REQUEST_VIEW_MODE, AkDialogFragment.ViewMode.PASSWORD_INPUT);
                         break;
                     default:
                         break;
