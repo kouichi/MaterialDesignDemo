@@ -1,4 +1,4 @@
-package jp.aknot.materialdesigndemo.widget;
+package jp.aknot.materialdesigndemo.presentation.view;
 
 import android.app.Activity;
 import android.app.Dialog;

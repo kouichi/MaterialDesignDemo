@@ -1,8 +1,8 @@
 package jp.aknot.materialdesigndemo.presentation;
 
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.REQUEST_VIEW_MODE;
-import static jp.aknot.materialdesigndemo.widget.AkDialogFragment.REQUEST_WEBVIEW_LOAD_URL;
-import static jp.aknot.materialdesigndemo.widget.helper.DialogResHolder.UNKNOWN_RES_ID;
+import static jp.aknot.materialdesigndemo.presentation.view.AkDialogFragment.REQUEST_VIEW_MODE;
+import static jp.aknot.materialdesigndemo.presentation.view.AkDialogFragment.REQUEST_WEBVIEW_LOAD_URL;
+import static jp.aknot.materialdesigndemo.presentation.view.helper.DialogResHolder.UNKNOWN_RES_ID;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -19,13 +19,13 @@ import java.util.List;
 
 import jp.aknot.materialdesigndemo.R;
 import jp.aknot.materialdesigndemo.presentation.adapter.SimpleListAdapter;
-import jp.aknot.materialdesigndemo.widget.AkDialogFragment;
-import jp.aknot.materialdesigndemo.widget.helper.AkDialogHelper;
-import jp.aknot.materialdesigndemo.widget.helper.AlertDialogResHolder;
-import jp.aknot.materialdesigndemo.widget.helper.ConfirmationDialogResHolder;
-import jp.aknot.materialdesigndemo.widget.helper.DialogResHolder;
-import jp.aknot.materialdesigndemo.widget.helper.ItemListDialogResHolder;
-import jp.aknot.materialdesigndemo.widget.helper.SimpleDialogResHolder;
+import jp.aknot.materialdesigndemo.presentation.view.AkDialogFragment;
+import jp.aknot.materialdesigndemo.presentation.view.helper.AkDialogHelper;
+import jp.aknot.materialdesigndemo.presentation.view.helper.AlertDialogResHolder;
+import jp.aknot.materialdesigndemo.presentation.view.helper.ConfirmationDialogResHolder;
+import jp.aknot.materialdesigndemo.presentation.view.helper.DialogResHolder;
+import jp.aknot.materialdesigndemo.presentation.view.helper.ItemListDialogResHolder;
+import jp.aknot.materialdesigndemo.presentation.view.helper.SimpleDialogResHolder;
 
 public class DialogActivity extends AppCompatActivity implements AkDialogFragment.Callback {
 
