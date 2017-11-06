@@ -37,6 +37,7 @@ public class AkDialogFragment extends DialogFragment {
     private static final String TAG = "@" + AkDialogFragment.class.getSimpleName();
 
     public static final String REQUEST_VIEW_MODE = "dialog:request_view_mode";
+    public static final String RESPONSE_VIEW_MODE = "dialog:response_view_mode";
     public static final String REQUEST_WEBVIEW_LOAD_URL = "dialog:request_webview_load_url";
 
     public static final String REQUEST_INTENT = "dialog:request_intent";
@@ -504,6 +505,7 @@ public class AkDialogFragment extends DialogFragment {
                 return new Bundle();
             }
             Bundle responses = new Bundle();
+            responses.putSerializable(RESPONSE_VIEW_MODE, requests.getParcelable(REQUEST_VIEW_MODE));
             responses.putParcelable(RESPONSE_INTENT, requests.getParcelable(REQUEST_INTENT));
             return responses;
         }
