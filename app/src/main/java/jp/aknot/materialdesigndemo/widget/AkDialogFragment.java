@@ -117,19 +117,13 @@ public class AkDialogFragment extends DialogFragment {
         final boolean cancelable = args.getBoolean(ARGS_CANCELABLE);
 
         final Bundle requests = args.getBundle(ARGS_REQUESTS);
-        ViewMode vm = ViewMode.DEFAULT;
-        if (requests != null) {
-            Serializable enumValue = requests.getSerializable(REQUEST_VIEW_MODE);
-            vm = enumValue != null ? (ViewMode) enumValue : ViewMode.DEFAULT;
-        }
-        final ViewMode viewMode = vm;
 
-        final int dialogId = args.getInt(ARGS_DIALOG_ID);
+        final ViewMode viewMode = InternalUtil.getViewMode(args);
+        final int dialogId = InternalUtil.getDialogId(args);
 
         this.eventTrackingEnabled = args.getBoolean(ARGS_EVENT_TRACKING_ENABLED);
 
-        AlertDialog.Builder builder =
-                themeResId != UNKNOWN_RES_ID ? new AlertDialog.Builder(activity, themeResId) : new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = themeResId != UNKNOWN_RES_ID ? new AlertDialog.Builder(activity, themeResId) : new AlertDialog.Builder(activity);
         if (iconResId != UNKNOWN_RES_ID) {
             builder.setIcon(iconResId);
         }
@@ -257,14 +251,7 @@ public class AkDialogFragment extends DialogFragment {
         super.onCancel(dialog);
 
         Bundle args = getArguments();
-        int dialogId = args.getInt(ARGS_DIALOG_ID);
-        Bundle requests = args.getBundle(ARGS_REQUESTS);
-
-        Bundle responses = new Bundle();
-        if (requests != null) {
-            responses.putParcelable(RESPONSE_INTENT, requests.getParcelable(REQUEST_INTENT));
-        }
-        callback.onAkDialogCancelled(dialogId, responses);
+        callback.onAkDialogCancelled(InternalUtil.getDialogId(args), InternalUtil.createMandatoryResponses(args));
     }
 
     @NonNull
@@ -494,6 +481,34 @@ public class AkDialogFragment extends DialogFragment {
         }
     }
 
+    private static class InternalUtil {
+
+        static int getDialogId(@NonNull Bundle args) {
+            return args.getInt(ARGS_DIALOG_ID);
+        }
+
+        @NonNull
+        static ViewMode getViewMode(@NonNull Bundle args) {
+            final Bundle requests = args.getBundle(ARGS_REQUESTS);
+            if (requests == null) {
+                return ViewMode.DEFAULT;
+            }
+            Serializable enumValue = requests.getSerializable(REQUEST_VIEW_MODE);
+            return enumValue != null ? (ViewMode) enumValue : ViewMode.DEFAULT;
+        }
+
+        @NonNull
+        static Bundle createMandatoryResponses(@NonNull Bundle args) {
+            Bundle requests = args.getBundle(ARGS_REQUESTS);
+            if (requests == null) {
+                return new Bundle();
+            }
+            Bundle responses = new Bundle();
+            responses.putParcelable(RESPONSE_INTENT, requests.getParcelable(REQUEST_INTENT));
+            return responses;
+        }
+    }
+
     private static class OnClickListener implements DialogInterface.OnClickListener {
 
         @NonNull
@@ -508,22 +523,12 @@ public class AkDialogFragment extends DialogFragment {
 
         @NonNull
         Bundle createResponses(@NonNull DialogInterface dialog) {
-            Bundle requests = args.getBundle(ARGS_REQUESTS);
-            if (requests == null) {
-                return new Bundle();
-            }
-            Bundle responses = new Bundle();
-            responses.putParcelable(RESPONSE_INTENT, requests.getParcelable(REQUEST_INTENT));
-            return responses;
-        }
-
-        private int getDialogId() {
-            return args.getInt(ARGS_DIALOG_ID);
+            return InternalUtil.createMandatoryResponses(args);
         }
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            callback.onAkDialogClicked(getDialogId(), which, createResponses(dialog));
+            callback.onAkDialogClicked(InternalUtil.getDialogId(args), which, createResponses(dialog));
         }
     }
 
@@ -558,7 +563,7 @@ public class AkDialogFragment extends DialogFragment {
         @NonNull
         @Override
         Bundle createResponses(@NonNull DialogInterface dialog) {
-            Bundle responses = super.createResponses(dialog);
+            Bundle responses = InternalUtil.createMandatoryResponses(args);
             responses.putInt(RESPONSE_CHECKED_ITEM_ID, checkedItemId);
             responses.putString(RESPONSE_CHECKED_ITEM_VALUE, checkedItem);
             return responses;
@@ -610,7 +615,7 @@ public class AkDialogFragment extends DialogFragment {
         @NonNull
         @Override
         Bundle createResponses(@NonNull DialogInterface dialog) {
-            Bundle responses = super.createResponses(dialog);
+            Bundle responses = InternalUtil.createMandatoryResponses(args);
             responses.putInt(RESPONSE_CHECKED_ITEM_ID, checkedItemId);
             responses.putString(RESPONSE_CHECKED_ITEM_VALUE, checkedItem);
             return responses;
