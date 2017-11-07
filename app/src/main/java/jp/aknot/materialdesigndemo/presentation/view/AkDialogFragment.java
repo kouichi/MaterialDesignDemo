@@ -505,7 +505,7 @@ public class AkDialogFragment extends DialogFragment {
                 return new Bundle();
             }
             Bundle responses = new Bundle();
-            responses.putSerializable(RESPONSE_VIEW_MODE, requests.getParcelable(REQUEST_VIEW_MODE));
+            responses.putSerializable(RESPONSE_VIEW_MODE, requests.getSerializable(REQUEST_VIEW_MODE));
             responses.putParcelable(RESPONSE_INTENT, requests.getParcelable(REQUEST_INTENT));
             return responses;
         }
