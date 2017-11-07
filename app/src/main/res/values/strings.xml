@@ -30,11 +30,11 @@
     <string name="dialog_1_alert_btn_positive">同意する</string>
     <string name="dialog_1_alert_btn_negative">同意しない</string>
     <string name="dialog_2_alert_title">[Side-by-side|Default] Googleの位置情報サービスを使用しますか？</string>
-    <string name="dialog_2_alert_msg">@string/dialog_1_alert_title</string>
+    <string name="dialog_2_alert_msg">@string/dialog_1_alert_msg</string>
     <string name="dialog_2_alert_btn_positive">@string/dialog_1_alert_btn_positive</string>
     <string name="dialog_2_alert_btn_negative">@string/dialog_1_alert_btn_negative</string>
     <string name="dialog_3_alert_title">[Side-by-side|Warn] Googleの位置情報サービスを使用しますか？</string>
-    <string name="dialog_3_alert_msg">@string/dialog_1_alert_title</string>
+    <string name="dialog_3_alert_msg">@string/dialog_1_alert_msg</string>
     <string name="dialog_3_alert_btn_positive">@string/dialog_1_alert_btn_positive</string>
     <string name="dialog_3_alert_btn_negative">@string/dialog_1_alert_btn_negative</string>
     <string name="dialog_4_alert_title">[Stacked full-width|None] Googleの位置情報サービスを使用しますか？</string>
@@ -42,11 +42,11 @@
     <string name="dialog_4_alert_btn_positive">スピードブーストを有効にする</string>
     <string name="dialog_4_alert_btn_negative">いいえ、結構です</string>
     <string name="dialog_5_alert_title">[Stacked full-width|Default] Googleの位置情報サービスを使用しますか？</string>
-    <string name="dialog_5_alert_msg">@string/dialog_4_alert_title</string>
+    <string name="dialog_5_alert_msg">@string/dialog_4_alert_msg</string>
     <string name="dialog_5_alert_btn_positive">@string/dialog_4_alert_btn_positive</string>
     <string name="dialog_5_alert_btn_negative">@string/dialog_4_alert_btn_negative</string>
     <string name="dialog_6_alert_title">[Stacked full-width|Warn] Googleの位置情報サービスを使用しますか？</string>
-    <string name="dialog_6_alert_msg">@string/dialog_4_alert_title</string>
+    <string name="dialog_6_alert_msg">@string/dialog_4_alert_msg</string>
     <string name="dialog_6_alert_btn_positive">@string/dialog_4_alert_btn_positive</string>
     <string name="dialog_6_alert_btn_negative">@string/dialog_4_alert_btn_negative</string>
     <string name="dialog_7_confirmation_title">[None] 着信音</string>
