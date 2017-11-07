@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      ~ Typography styles
+      ~     Dense scripts (Chinese, Japanese, and Korean)
+      ~
+      ~ see also,
+      ~     https://material.io/guidelines/style/typography.html#typography-styles
+    -->
+    <dimen name="ak_text_size_display_4">112sp</dimen>
+    <dimen name="ak_text_size_display_3">56sp</dimen>
+    <dimen name="ak_text_size_display_2">45sp</dimen>
+    <dimen name="ak_text_size_display_1">34sp</dimen>
+    <dimen name="ak_text_size_headline">24sp</dimen>
+    <dimen name="ak_text_size_title">21sp</dimen>
+    <dimen name="ak_text_size_subhead">17sp</dimen>
+    <dimen name="ak_text_size_body_2">15sp</dimen>
+    <dimen name="ak_text_size_body_1">15sp</dimen>
+    <dimen name="ak_text_size_caption">13sp</dimen>
+    <dimen name="ak_text_size_button">15sp</dimen>
+</resources>
