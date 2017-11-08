@@ -50,4 +50,11 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <!--
+      ~ Especial TextAppearance
+    -->
+    <style name="MyTextAppearance.Alert.Dialog.Message" parent="MyTextAppearance.Body1">
+        <item name="android:textColor">@color/gray01</item>
+    </style>
+
 </resources>

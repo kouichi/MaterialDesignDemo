@@ -13,6 +13,7 @@ import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -26,6 +27,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.Serializable;
 
@@ -228,6 +230,12 @@ public class AkDialogFragment extends DialogFragment {
 
         dialog.setOnShowListener(dlg -> {
             AlertDialog alertDialog = (AlertDialog) dlg;
+            TextView textView = alertDialog.findViewById(android.R.id.message);
+            if (textView != null) {
+                textView.setLineSpacing(0, 1.3f); // TODO: 値は適当になので調整が必要
+                TextViewCompat.setTextAppearance(textView, R.style.MyTextAppearance_Alert_Dialog_Message);
+            }
+
             Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
             switch (viewMode) {
                 case PASSWORD_INPUT:
