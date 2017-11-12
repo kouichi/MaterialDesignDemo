@@ -1,6 +1,5 @@
 package jp.aknot.materialdesigndemo.presentation.view;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,7 +31,7 @@ import android.widget.TextView;
 import java.io.Serializable;
 
 import jp.aknot.materialdesigndemo.R;
-import jp.aknot.materialdesigndemo.presentation.adapter.IconListAdapter;
+import jp.aknot.materialdesigndemo.presentation.adapter.DialogItemAdapter;
 
 public class AkDialogFragment extends DialogFragment {
 
@@ -58,9 +57,9 @@ public class AkDialogFragment extends DialogFragment {
     private static final String ARGS_ICON_RES_ID = "iconResId";
     private static final String ARGS_TITLE = "title";
     private static final String ARGS_MESSAGE = "message";
+    private static final String ARGS_ICON_ITEMS_RES_ID = "iconItemsResId";
     private static final String ARGS_ITEMS_RES_ID = "itemsResId";
     private static final String ARGS_SINGLE_CHOICE_ITEMS_RES_ID = "singleChoiceItemsResId";
-    private static final String ARGS_ICON_ITEMS_ID = "iconItems";
     private static final String ARGS_POSITIVE_BTN_TEXT_RES_ID = "positiveBtnTextResId";
     private static final String ARGS_NEGATIVE_BTN_TEXT_RES_ID = "negativeBtnTextResId";
     private static final String ARGS_NEUTRAL_BTN_TEXT_RES_ID = "neutralBtnTextResId";
@@ -69,7 +68,7 @@ public class AkDialogFragment extends DialogFragment {
     private static final String ARGS_DIALOG_ID = "dialogId";
     private static final String ARGS_EVENT_TRACKING_ENABLED = "eventTrackingEnabled";
 
-    private static final int UNKNOWN_RES_ID = 0;
+    public static final int UNKNOWN_RES_ID = 0;
 
     private boolean eventTrackingEnabled;
 
@@ -110,9 +109,9 @@ public class AkDialogFragment extends DialogFragment {
         @DrawableRes final int iconResId = args.getInt(ARGS_ICON_RES_ID);
         final String title = args.getString(ARGS_TITLE);
         final String message = args.getString(ARGS_MESSAGE);
+        @ArrayRes final int iconItemsResId = args.getInt(ARGS_ICON_ITEMS_RES_ID);
         @ArrayRes final int itemsResId = args.getInt(ARGS_ITEMS_RES_ID);
         @ArrayRes final int singleChoiceItemsResId = args.getInt(ARGS_SINGLE_CHOICE_ITEMS_RES_ID);
-        final IconListAdapter.Item[] iconItems = (IconListAdapter.Item[]) args.getParcelableArray(ARGS_ICON_ITEMS_ID);
         @StringRes final int positiveBtnTextResId = args.getInt(ARGS_POSITIVE_BTN_TEXT_RES_ID);
         @StringRes final int negativeBtnTextResId = args.getInt(ARGS_NEGATIVE_BTN_TEXT_RES_ID);
         @StringRes final int neutralBtnTextResId = args.getInt(ARGS_NEUTRAL_BTN_TEXT_RES_ID);
@@ -138,10 +137,18 @@ public class AkDialogFragment extends DialogFragment {
         }
 
         if (itemsResId != UNKNOWN_RES_ID) {
-            builder.setItems(itemsResId, wrapOnItemClickListenerIfNeeds(title, itemsResId, args));
+            DialogItemAdapter adapter;
+            if (iconItemsResId != UNKNOWN_RES_ID) {
+                adapter = new DialogItemAdapter(activity, R.layout.select_dialog_item, R.id.text, iconItemsResId, itemsResId);
+            } else {
+                adapter = new DialogItemAdapter(activity, R.layout.select_dialog_item, R.id.text, itemsResId);
+            }
+            builder.setAdapter(adapter, wrapOnItemClickListenerIfNeeds(title, itemsResId, args));
         }
+
         if (singleChoiceItemsResId != UNKNOWN_RES_ID) {
-            builder.setSingleChoiceItems(singleChoiceItemsResId, -1 /* no items are checked. */, (dialog, which) -> {
+            DialogItemAdapter adapter = new DialogItemAdapter(activity, R.layout.select_dialog_single_choice, R.id.text, singleChoiceItemsResId);
+            builder.setSingleChoiceItems(adapter, -1 /* no items are checked. */, (dialog, which) -> {
                 AlertDialog alertDialog = (AlertDialog) dialog;
                 Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
                 positiveButton.setEnabled(true);
@@ -188,29 +195,8 @@ public class AkDialogFragment extends DialogFragment {
                 break;
             }
             case DEFAULT:
-            default: {
-                if (iconItems != null && iconItems.length > 0) {
-                    View view = LayoutInflater.from(activity).inflate(R.layout.dialog_content_list, null);
-                    ListView listView = view.findViewById(R.id.dialog_content_list_view);
-                    listView.setAdapter(new IconListAdapter(activity, iconItems));
-                    listView.setOnItemClickListener((parent, view1, position, id) -> {
-                        IconListAdapter.Item item = (IconListAdapter.Item) parent.getItemAtPosition(position);
-                        Log.d(TAG, "onItemSelected: position=" + position + ", id=" + id + ", item=" + item.title);
-
-                        Bundle responses = new Bundle();
-                        if (requests != null) {
-                            responses.putParcelable(RESPONSE_INTENT, requests.getParcelable(REQUEST_INTENT));
-                        }
-                        responses.putInt(RESPONSE_CHECKED_ITEM_ID, position);
-                        responses.putString(RESPONSE_CHECKED_ITEM_VALUE, item.title);
-
-                        callback.onAkDialogClicked(dialogId, Activity.RESULT_OK, responses);
-                        dismiss();
-                    });
-                    builder.setView(view);
-                }
+            default:
                 break;
-            }
         }
 
         if (positiveBtnTextResId != UNKNOWN_RES_ID) {
@@ -303,12 +289,13 @@ public class AkDialogFragment extends DialogFragment {
         private String message;
 
         @ArrayRes
+        private int iconItemsResId = UNKNOWN_RES_ID;
+
+        @ArrayRes
         private int itemsResId = UNKNOWN_RES_ID;
 
         @ArrayRes
         private int singleChoiceItemsResId = UNKNOWN_RES_ID;
-
-        private IconListAdapter.Item[] iconItems;
 
         @StringRes
         private int positiveBtnTextResId = UNKNOWN_RES_ID;
@@ -405,8 +392,9 @@ public class AkDialogFragment extends DialogFragment {
         }
 
         @NonNull
-        public Builder iconItems(@NonNull IconListAdapter.Item[] iconItems) {
-            this.iconItems = iconItems;
+        public Builder iconItems(@ArrayRes int iconItemsResId, @ArrayRes int itemsResId) {
+            this.iconItemsResId = iconItemsResId;
+            this.itemsResId = itemsResId;
             return this;
         }
 
@@ -473,9 +461,9 @@ public class AkDialogFragment extends DialogFragment {
             args.putInt(ARGS_ICON_RES_ID, iconResId);
             args.putString(ARGS_TITLE, title);
             args.putString(ARGS_MESSAGE, message);
+            args.putInt(ARGS_ICON_ITEMS_RES_ID, iconItemsResId);
             args.putInt(ARGS_ITEMS_RES_ID, itemsResId);
             args.putInt(ARGS_SINGLE_CHOICE_ITEMS_RES_ID, singleChoiceItemsResId);
-            args.putParcelableArray(ARGS_ICON_ITEMS_ID, iconItems);
             args.putInt(ARGS_POSITIVE_BTN_TEXT_RES_ID, positiveBtnTextResId);
             args.putInt(ARGS_NEGATIVE_BTN_TEXT_RES_ID, negativeBtnTextResId);
             args.putInt(ARGS_NEUTRAL_BTN_TEXT_RES_ID, neutralBtnTextResId);
@@ -639,7 +627,8 @@ public class AkDialogFragment extends DialogFragment {
                 int position = listView.getCheckedItemPosition();
                 if (position != ListView.INVALID_POSITION) {
                     this.checkedItemId = position;
-                    this.checkedItem = (String) listView.getAdapter().getItem(position);
+                    DialogItemAdapter.Item item = (DialogItemAdapter.Item) listView.getAdapter().getItem(position);
+                    this.checkedItem = item.text;
                     Log.i(TAG, "Event tracking: " + title + " [" + position + ":" + checkedItem + "]");
                 }
                 super.onClick(dialog, which);

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Based on
+  ~     - https://github.com/aosp-mirror/platform_frameworks_support/blob/master/v7/appcompat/res/layout/select_dialog_item_material.xml
+-->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:minHeight="?attr/listPreferredItemHeightSmall"
+          android:textAppearance="@style/MyTextAppearance.Alert.Dialog.Item"
+          android:textColor="?attr/textColorAlertDialogListItem"
+          android:gravity="center_vertical"
+          android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+          android:paddingRight="?attr/listPreferredItemPaddingRight"
+          android:paddingStart="?attr/listPreferredItemPaddingLeft"
+          android:paddingEnd="?attr/listPreferredItemPaddingRight"
+          android:ellipsize="marquee"
+          tools:text="選択肢(テキスト)"
+    />

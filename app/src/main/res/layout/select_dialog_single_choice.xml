@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Based on
+  ~     - https://github.com/aosp-mirror/platform_frameworks_support/blob/master/v7/appcompat/res/layout/select_dialog_singlechoice_material.xml
+-->
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:id="@+id/text"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:minHeight="?attr/listPreferredItemHeightSmall"
+                 android:textAppearance="@style/MyTextAppearance.Alert.Dialog.SingleChoice"
+                 android:textColor="?attr/textColorAlertDialogListItem"
+                 android:gravity="center_vertical"
+                 android:paddingLeft="@dimen/abc_select_dialog_padding_start_material"
+                 android:paddingRight="?attr/dialogPreferredPadding"
+                 android:paddingStart="@dimen/abc_select_dialog_padding_start_material"
+                 android:paddingEnd="?attr/dialogPreferredPadding"
+                 android:drawableLeft="?android:attr/listChoiceIndicatorSingle"
+                 android:drawableStart="?android:attr/listChoiceIndicatorSingle"
+                 android:drawablePadding="20dp"
+                 android:ellipsize="marquee"/>

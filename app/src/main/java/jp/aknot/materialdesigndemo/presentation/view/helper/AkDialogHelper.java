@@ -1,18 +1,10 @@
 package jp.aknot.materialdesigndemo.presentation.view.helper;
 
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jp.aknot.materialdesigndemo.presentation.adapter.IconListAdapter;
 import jp.aknot.materialdesigndemo.presentation.view.AkDialogFragment;
 
 public final class AkDialogHelper {
@@ -76,26 +68,6 @@ public final class AkDialogHelper {
                     .show();
         } else if (dialogResHolder instanceof ItemListDialogResHolder) {
             ItemListDialogResHolder holder = (ItemListDialogResHolder) dialogResHolder;
-            List<IconListAdapter.Item> iconItemList = new ArrayList<>();
-            Resources resources = activity.getResources();
-            TypedArray drawableTypedArray = resources.obtainTypedArray(holder.itemDrawablesResId);
-            TypedArray stringTypedArray = resources.obtainTypedArray(holder.itemsResId);
-            try {
-                int length = drawableTypedArray.length();
-                for (int i = 0; i < length; i++) {
-                    @DrawableRes int drawableResId = drawableTypedArray.getResourceId(i, DialogResHolder.UNKNOWN_RES_ID);
-                    String title = stringTypedArray.getString(i);
-                    if (TextUtils.isEmpty(title)) {
-                        continue;
-                    }
-                    iconItemList.add(new IconListAdapter.Item(drawableResId, title));
-                }
-            } finally {
-                drawableTypedArray.recycle();
-                stringTypedArray.recycle();
-            }
-            IconListAdapter.Item[] iconItems = iconItemList.toArray(new IconListAdapter.Item[iconItemList.size()]);
-
             AkDialogFragment.Builder builder = new AkDialogFragment.Builder(activity, true)
                     .theme(holder.themeResId);
             if (titleValueArray != null) {
@@ -103,7 +75,7 @@ public final class AkDialogHelper {
             } else {
                 builder = builder.title(holder.titleResId);
             }
-            builder.iconItems(iconItems)
+            builder.iconItems(holder.itemDrawablesResId, holder.itemsResId)
                     .dialogId(dialogId)
                     .requests(realRequests)
                     .show();
