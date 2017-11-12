@@ -1,4 +1,4 @@
-package jp.aknot.materialdesigndemo.adapter;
+package jp.aknot.materialdesigndemo.presentation.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

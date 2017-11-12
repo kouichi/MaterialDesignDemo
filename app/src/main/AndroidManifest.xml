@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="jp.aknot.materialdesigndemo">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -18,13 +20,13 @@
         </activity>
 
         <activity
-            android:name=".MenuActivity"
+            android:name=".presentation.MenuActivity"
             android:exported="false"/>
         <activity
-            android:name=".ButtonActivity"
+            android:name=".presentation.ButtonActivity"
             android:exported="false"/>
         <activity
-            android:name=".DialogActivity"
+            android:name=".presentation.DialogActivity"
             android:exported="false"/>
     </application>
 

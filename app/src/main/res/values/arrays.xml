@@ -6,4 +6,10 @@
         <item>@drawable/ic_person_vector_tinted_40dp</item>
         <item>@drawable/ic_add_circle_vector_tinted_40dp</item>
     </array>
+    <array name="dialog_14_item_list_item_drawables">
+        <item>@drawable/ic_person_vector_tinted_40dp</item>
+        <item>@drawable/ic_person_vector_tinted_40dp</item>
+        <item>@drawable/ic_person_vector_tinted_40dp</item>
+        <item>@drawable/ic_add_circle_vector_tinted_40dp</item>
+    </array>
 </resources>

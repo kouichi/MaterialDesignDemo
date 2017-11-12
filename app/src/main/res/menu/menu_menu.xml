@@ -7,19 +7,19 @@
         android:icon="@drawable/ic_add_vector_tinted_24dp"
         android:title="@string/menu_action_title_add"
         app:showAsAction="ifRoom"
-    />
+        />
     <item
         android:id="@+id/menu_action_refresh"
         android:icon="@drawable/ic_refresh_vector_tinted_24dp"
         android:title="@string/menu_action_title_refresh"
         app:showAsAction="ifRoom"
-    />
+        />
     <item
         android:id="@+id/menu_action_refresh_disabled"
         android:enabled="false"
         android:icon="@drawable/ic_refresh_vector_tinted_24dp"
         android:title="@string/menu_action_title_refresh"
         app:showAsAction="ifRoom"
-    />
+        />
 
 </menu>

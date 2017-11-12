@@ -1,4 +1,4 @@
-package jp.aknot.materialdesigndemo;
+package jp.aknot.materialdesigndemo.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import jp.aknot.materialdesigndemo.adapter.SimpleListAdapter;
+import jp.aknot.materialdesigndemo.R;
+import jp.aknot.materialdesigndemo.presentation.adapter.SimpleListAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

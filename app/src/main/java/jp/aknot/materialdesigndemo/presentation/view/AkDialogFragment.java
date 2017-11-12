@@ -1,22 +1,5 @@
-package jp.aknot.materialdesigndemo;
+package jp.aknot.materialdesigndemo.presentation.view;
 
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_CANCELABLE;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_DIALOG_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_EVENT_TRACKING_ENABLED;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_ITEMS_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ICON_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_ITEMS_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_MESSAGE;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEGATIVE_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_NEUTRAL_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_PARAMS;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_POSITIVE_BTN_TEXT_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_SINGLE_CHOICE_ITEMS_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_THEME_RES_ID;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.ARGS_TITLE;
-import static jp.aknot.materialdesigndemo.AkDialogFragment.Builder.UNKNOWN_RES_ID;
-
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,26 +12,73 @@ import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import jp.aknot.materialdesigndemo.adapter.IconListAdapter;
+import java.io.Serializable;
+
+import jp.aknot.materialdesigndemo.R;
+import jp.aknot.materialdesigndemo.presentation.adapter.DialogItemAdapter;
 
 public class AkDialogFragment extends DialogFragment {
 
-    public static final String PARAM_CHECKED_ITEM_ID = "dialog:checkedItemId";
-    public static final String PARAM_CHECKED_ITEM_VALUE = "dialog:checkedItemValue";
-    public static final String PARAM_ERROR = "dialog:error";
     private static final String TAG = "@" + AkDialogFragment.class.getSimpleName();
+
+    public static final String REQUEST_VIEW_MODE = "dialog:request_view_mode";
+    public static final String RESPONSE_VIEW_MODE = "dialog:response_view_mode";
+    public static final String REQUEST_WEBVIEW_LOAD_URL = "dialog:request_webview_load_url";
+
+    public static final String REQUEST_INTENT = "dialog:request_intent";
+    public static final String RESPONSE_INTENT = "dialog:response_intent";
+
+    public static final String REQUEST_TITLE_VALUE_ARRAY = "dialog:request_title_value_array";
+    public static final String REQUEST_MESSAGE_VALUE_ARRAY = "dialog:request_message_value_array";
+    public static final String REQUEST_ERROR = "dialog:request_error";
+
+    public static final String RESPONSE_CHECKED_ITEM_ID = "dialog:response_checked_item_id";
+    public static final String RESPONSE_CHECKED_ITEM_VALUE = "dialog:response_checked_item_value";
+
+    public static final int NO_ITEM_ID = -1;
+
+    private static final String ARGS_THEME_RES_ID = "themeResId";
+    private static final String ARGS_ICON_RES_ID = "iconResId";
+    private static final String ARGS_TITLE = "title";
+    private static final String ARGS_MESSAGE = "message";
+    private static final String ARGS_ICON_ITEMS_RES_ID = "iconItemsResId";
+    private static final String ARGS_ITEMS_RES_ID = "itemsResId";
+    private static final String ARGS_SINGLE_CHOICE_ITEMS_RES_ID = "singleChoiceItemsResId";
+    private static final String ARGS_POSITIVE_BTN_TEXT_RES_ID = "positiveBtnTextResId";
+    private static final String ARGS_NEGATIVE_BTN_TEXT_RES_ID = "negativeBtnTextResId";
+    private static final String ARGS_NEUTRAL_BTN_TEXT_RES_ID = "neutralBtnTextResId";
+    private static final String ARGS_CANCELABLE = "cancelable";
+    private static final String ARGS_REQUESTS = "requests";
+    private static final String ARGS_DIALOG_ID = "dialogId";
+    private static final String ARGS_EVENT_TRACKING_ENABLED = "eventTrackingEnabled";
+
+    public static final int UNKNOWN_RES_ID = 0;
+
     private boolean eventTrackingEnabled;
 
     private Callback callback;
+
+    public enum ViewMode {
+        DEFAULT,
+        WEBVIEW,
+        PASSWORD_INPUT,
+    }
 
     public AkDialogFragment() {
     }
@@ -79,22 +109,23 @@ public class AkDialogFragment extends DialogFragment {
         @DrawableRes final int iconResId = args.getInt(ARGS_ICON_RES_ID);
         final String title = args.getString(ARGS_TITLE);
         final String message = args.getString(ARGS_MESSAGE);
+        @ArrayRes final int iconItemsResId = args.getInt(ARGS_ICON_ITEMS_RES_ID);
         @ArrayRes final int itemsResId = args.getInt(ARGS_ITEMS_RES_ID);
         @ArrayRes final int singleChoiceItemsResId = args.getInt(ARGS_SINGLE_CHOICE_ITEMS_RES_ID);
-        final IconListAdapter.Item[] iconItems = (IconListAdapter.Item[]) args.getParcelableArray(ARGS_ICON_ITEMS_ID);
         @StringRes final int positiveBtnTextResId = args.getInt(ARGS_POSITIVE_BTN_TEXT_RES_ID);
         @StringRes final int negativeBtnTextResId = args.getInt(ARGS_NEGATIVE_BTN_TEXT_RES_ID);
         @StringRes final int neutralBtnTextResId = args.getInt(ARGS_NEUTRAL_BTN_TEXT_RES_ID);
 
         final boolean cancelable = args.getBoolean(ARGS_CANCELABLE);
 
-        final Bundle params = args.getBundle(ARGS_PARAMS);
-        final int dialogId = args.getInt(ARGS_DIALOG_ID);
+        final Bundle requests = args.getBundle(ARGS_REQUESTS);
+
+        final ViewMode viewMode = InternalUtil.getViewMode(args);
+        final int dialogId = InternalUtil.getDialogId(args);
 
         this.eventTrackingEnabled = args.getBoolean(ARGS_EVENT_TRACKING_ENABLED);
 
-        AlertDialog.Builder builder =
-                themeResId != UNKNOWN_RES_ID ? new AlertDialog.Builder(activity, themeResId) : new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = themeResId != UNKNOWN_RES_ID ? new AlertDialog.Builder(activity, themeResId) : new AlertDialog.Builder(activity);
         if (iconResId != UNKNOWN_RES_ID) {
             builder.setIcon(iconResId);
         }
@@ -106,36 +137,66 @@ public class AkDialogFragment extends DialogFragment {
         }
 
         if (itemsResId != UNKNOWN_RES_ID) {
-            builder.setItems(itemsResId, wrapOnItemClickListenerIfNeeds(title, itemsResId, args));
+            DialogItemAdapter adapter;
+            if (iconItemsResId != UNKNOWN_RES_ID) {
+                adapter = new DialogItemAdapter(activity, R.layout.select_dialog_item, R.id.text, iconItemsResId, itemsResId);
+            } else {
+                adapter = new DialogItemAdapter(activity, R.layout.select_dialog_item, R.id.text, itemsResId);
+            }
+            builder.setAdapter(adapter, wrapOnItemClickListenerIfNeeds(title, itemsResId, args));
         }
+
         if (singleChoiceItemsResId != UNKNOWN_RES_ID) {
-            builder.setSingleChoiceItems(singleChoiceItemsResId, -1 /* no items are checked. */, (dialog, which) -> {
+            DialogItemAdapter adapter = new DialogItemAdapter(activity, R.layout.select_dialog_single_choice, R.id.text, singleChoiceItemsResId);
+            builder.setSingleChoiceItems(adapter, -1 /* no items are checked. */, (dialog, which) -> {
                 AlertDialog alertDialog = (AlertDialog) dialog;
                 Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
                 positiveButton.setEnabled(true);
             });
         }
 
-        if (iconItems != null && iconItems.length > 0) {
-            View view = LayoutInflater.from(activity).inflate(R.layout.dialog_content_list, null);
-            ListView listView = view.findViewById(R.id.dialog_content_list_view);
-            listView.setAdapter(new IconListAdapter(activity, iconItems));
-            listView.setOnItemClickListener((parent, view1, position, id) -> {
-                IconListAdapter.Item item = (IconListAdapter.Item) parent.getItemAtPosition(position);
-                Log.d(TAG, "onItemSelected: position=" + position + ", id=" + id + ", item=" + item.title);
-
-                Bundle p = new Bundle();
-                if (params != null) {
-                    p = new Bundle(params);
+        switch (viewMode) {
+            case WEBVIEW: {
+                String url = requests.getString(REQUEST_WEBVIEW_LOAD_URL);
+                if (TextUtils.isEmpty(url)) {
+                    throw new IllegalStateException("This following requests parameter is mandatory: " + REQUEST_WEBVIEW_LOAD_URL);
                 }
-                p.putInt(PARAM_CHECKED_ITEM_ID, position);
-                p.putString(PARAM_CHECKED_ITEM_VALUE, item.title);
-                args.putBundle(ARGS_PARAMS, p);
+                View view = LayoutInflater.from(activity).inflate(R.layout.dialog_content_webview, null);
+                WebView webView = view.findViewById(R.id.dialog_content_webview);
+                webView.setWebViewClient(new WebViewClient()); // Browser 起動防止
+                webView.loadUrl(url);
+                builder.setView(view);
+                break;
+            }
+            case PASSWORD_INPUT: {
+                View view = LayoutInflater.from(activity).inflate(R.layout.dialog_content_password_input, null);
+                EditText editText = view.findViewById(R.id.dialog_content_password_input);
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
 
-                callback.onAkDialogClicked(dialogId, Activity.RESULT_OK, p);
-                dismiss();
-            });
-            builder.setView(view);
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        AlertDialog alertDialog = (AlertDialog) getDialog();
+                        Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                        if (s != null && s.length() > 0) {
+                            positiveButton.setEnabled(true);
+                        } else {
+                            positiveButton.setEnabled(false);
+                        }
+                    }
+                });
+                builder.setView(view);
+                break;
+            }
+            case DEFAULT:
+            default:
+                break;
         }
 
         if (positiveBtnTextResId != UNKNOWN_RES_ID) {
@@ -154,9 +215,25 @@ public class AkDialogFragment extends DialogFragment {
         setCancelable(cancelable);
 
         dialog.setOnShowListener(dlg -> {
+            AlertDialog alertDialog = (AlertDialog) dlg;
+            TextView textView = alertDialog.findViewById(android.R.id.message);
+            if (textView != null) {
+                textView.setLineSpacing(0, 1.3f); // TODO: 値は適当になので調整が必要
+                TextViewCompat.setTextAppearance(textView, R.style.MyTextAppearance_Alert_Dialog_Message);
+            }
+
+            Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            switch (viewMode) {
+                case PASSWORD_INPUT:
+                    positiveButton.setEnabled(false);
+                    break;
+                case DEFAULT:
+                case WEBVIEW:
+                default:
+                    break;
+            }
+
             if (singleChoiceItemsResId != UNKNOWN_RES_ID) {
-                AlertDialog alertDialog = (AlertDialog) dlg;
-                Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
                 positiveButton.setEnabled(false);
             }
         });
@@ -169,11 +246,10 @@ public class AkDialogFragment extends DialogFragment {
         super.onCancel(dialog);
 
         Bundle args = getArguments();
-        int dialogId = args.getInt(ARGS_DIALOG_ID);
-        Bundle params = args.getBundle(ARGS_PARAMS);
-        callback.onAkDialogCancelled(dialogId, params);
+        callback.onAkDialogCancelled(InternalUtil.getDialogId(args), InternalUtil.createMandatoryResponses(args));
     }
 
+    @NonNull
     private DialogInterface.OnClickListener wrapOnItemClickListenerIfNeeds(@Nullable String title, @ArrayRes int itemsResId, @NonNull Bundle args) {
         if (eventTrackingEnabled) {
             return new OnItemClickListener(title, itemsResId, callback, args);
@@ -181,6 +257,7 @@ public class AkDialogFragment extends DialogFragment {
         return new OnClickListener(callback, args);
     }
 
+    @NonNull
     private DialogInterface.OnClickListener wrapOnButtonClickListenerIfNeeds(@Nullable String title, @StringRes int buttonResId, @NonNull Bundle args) {
         if (eventTrackingEnabled) {
             return new OnButtonClickListener(title, buttonResId, callback, args);
@@ -189,75 +266,57 @@ public class AkDialogFragment extends DialogFragment {
     }
 
     public interface Callback {
-        void onAkDialogClicked(int dialogId, int resultCode, Bundle params);
+        void onAkDialogClicked(int dialogId, int resultCode, Bundle responses);
 
-        void onAkDialogCancelled(int dialogId, Bundle params);
+        void onAkDialogCancelled(int dialogId, Bundle responses);
     }
 
     public static class Builder {
 
-        public static final String ARGS_THEME_RES_ID = "themeResId";
-        public static final String ARGS_ICON_RES_ID = "iconResId";
-        public static final String ARGS_TITLE = "title";
-        public static final String ARGS_MESSAGE = "message";
-        public static final String ARGS_ITEMS_RES_ID = "itemsResId";
-        public static final String ARGS_SINGLE_CHOICE_ITEMS_RES_ID = "singleChoiceItemsResId";
-        public static final String ARGS_ICON_ITEMS_ID = "iconItems";
-        public static final String ARGS_POSITIVE_BTN_TEXT_RES_ID = "positiveBtnTextResId";
-        public static final String ARGS_NEGATIVE_BTN_TEXT_RES_ID = "negativeBtnTextResId";
-        public static final String ARGS_NEUTRAL_BTN_TEXT_RES_ID = "neutralBtnTextResId";
-        public static final String ARGS_CANCELABLE = "cancelable";
-        public static final String ARGS_PARAMS = "params";
-        public static final String ARGS_DIALOG_ID = "dialogId";
-        public static final String ARGS_EVENT_TRACKING_ENABLED = "eventTrackingEnabled";
-
-        static final int UNKNOWN_RES_ID = 0;
-
-        final AppCompatActivity activity;
+        private final AppCompatActivity activity;
 
         /** イベントトラッキングを有効にするか否か. */
-        final boolean eventTrackingEnabled;
+        private final boolean eventTrackingEnabled;
 
         @StyleRes
-        int themeResId = UNKNOWN_RES_ID;
+        private int themeResId = UNKNOWN_RES_ID;
 
         @DrawableRes
-        int iconResId = UNKNOWN_RES_ID;
+        private int iconResId = UNKNOWN_RES_ID;
 
-        String title;
+        private String title;
 
-        String message;
-
-        @ArrayRes
-        int itemsResId = UNKNOWN_RES_ID;
+        private String message;
 
         @ArrayRes
-        int singleChoiceItemsResId = UNKNOWN_RES_ID;
+        private int iconItemsResId = UNKNOWN_RES_ID;
 
-        IconListAdapter.Item[] iconItems;
+        @ArrayRes
+        private int itemsResId = UNKNOWN_RES_ID;
 
-        @StringRes
-        int positiveBtnTextResId = UNKNOWN_RES_ID;
-
-        @StringRes
-        int negativeBtnTextResId = UNKNOWN_RES_ID;
+        @ArrayRes
+        private int singleChoiceItemsResId = UNKNOWN_RES_ID;
 
         @StringRes
-        int neutralBtnTextResId = UNKNOWN_RES_ID;
+        private int positiveBtnTextResId = UNKNOWN_RES_ID;
 
-        int dialogId = -1;
+        @StringRes
+        private int negativeBtnTextResId = UNKNOWN_RES_ID;
 
-        Bundle params;
+        @StringRes
+        private int neutralBtnTextResId = UNKNOWN_RES_ID;
 
-        boolean cancelable = true;
+        private int dialogId = -1;
 
-        String tag = "default";
+        private Bundle requests = new Bundle();
+
+        private boolean cancelable = true;
+
+        private String tag = "default";
 
         public <A extends AppCompatActivity & Callback> Builder(@NonNull final A activity) {
             this(activity, false);
         }
-
-        // ------
 
         public <A extends AppCompatActivity & Callback> Builder(@NonNull final A activity, boolean eventTrackingEnabled) {
             this.activity = activity;
@@ -283,24 +342,26 @@ public class AkDialogFragment extends DialogFragment {
         }
 
         @NonNull
-        public Builder title(@StringRes int titleResId, @NonNull Object... formatArgs) {
-            this.title = getContext().getString(titleResId, formatArgs);
+        public Builder title(@StringRes int titleResId, @NonNull String... formatArgs) {
+            if (titleResId != UNKNOWN_RES_ID) {
+                this.title = getContext().getString(titleResId, (Object[]) formatArgs);
+            }
             return this;
         }
 
+        @NonNull
         public Builder message(@NonNull String message) {
             this.message = message;
             return this;
         }
 
-        // ------
-
-        public Builder message(@StringRes int messageResId, Object... formatArgs) {
-            this.message = getContext().getString(messageResId, formatArgs);
+        @NonNull
+        public Builder message(@StringRes int messageResId, String... formatArgs) {
+            if (messageResId != UNKNOWN_RES_ID) {
+                this.message = getContext().getString(messageResId, (Object[]) formatArgs);
+            }
             return this;
         }
-
-        // ------
 
         /**
          * Simple Dialog.
@@ -310,6 +371,7 @@ public class AkDialogFragment extends DialogFragment {
          *
          * @see <a href="https://material.io/guidelines/components/dialogs.html#dialogs-simple-dialogs">Components–Dialogs</a>
          */
+        @NonNull
         public Builder items(@ArrayRes int itemsResId) {
             this.itemsResId = itemsResId;
             return this;
@@ -323,59 +385,72 @@ public class AkDialogFragment extends DialogFragment {
          *
          * @see <a href="https://material.io/guidelines/components/dialogs.html#dialogs-confirmation-dialogs">Components–Dialogs</a>
          */
+        @NonNull
         public Builder singleChoiceItems(@ArrayRes int itemsResId) {
             this.singleChoiceItemsResId = itemsResId;
             return this;
         }
 
-        public Builder iconItems(@NonNull IconListAdapter.Item[] iconItems) {
-            this.iconItems = iconItems;
+        @NonNull
+        public Builder iconItems(@ArrayRes int iconItemsResId, @ArrayRes int itemsResId) {
+            this.iconItemsResId = iconItemsResId;
+            this.itemsResId = itemsResId;
             return this;
         }
 
+        @NonNull
         public Builder positiveButton(@StringRes int textResId) {
             this.positiveBtnTextResId = textResId;
             return this;
         }
 
+        @NonNull
         public Builder okButton() {
             return positiveButton(R.string.btn_label_ok);
         }
 
+        @NonNull
         public Builder negativeButton(@StringRes int textResId) {
             this.negativeBtnTextResId = textResId;
             return this;
         }
 
+        @NonNull
         public Builder neutralButton(@StringRes int textResId) {
             this.neutralBtnTextResId = textResId;
             return this;
         }
 
+        @NonNull
         public Builder cancelButton() {
             return negativeButton(R.string.btn_label_cancel);
         }
 
+        @NonNull
         public Builder dialogId(int dialogId) {
             this.dialogId = dialogId;
             return this;
         }
 
-        public Builder params(@NonNull Bundle params) {
-            this.params = params;
+        @NonNull
+        public Builder requests(@NonNull Bundle requests) {
+            this.requests = requests;
             return this;
         }
 
+        @NonNull
         public Builder cancelable(boolean cancelable) {
             this.cancelable = cancelable;
             return this;
         }
 
+        @NonNull
         public Builder tag(@NonNull String tag) {
             this.tag = tag;
             return this;
         }
 
+        @NonNull
         private Context getContext() {
             return activity.getApplicationContext();
         }
@@ -386,22 +461,49 @@ public class AkDialogFragment extends DialogFragment {
             args.putInt(ARGS_ICON_RES_ID, iconResId);
             args.putString(ARGS_TITLE, title);
             args.putString(ARGS_MESSAGE, message);
+            args.putInt(ARGS_ICON_ITEMS_RES_ID, iconItemsResId);
             args.putInt(ARGS_ITEMS_RES_ID, itemsResId);
             args.putInt(ARGS_SINGLE_CHOICE_ITEMS_RES_ID, singleChoiceItemsResId);
-            args.putParcelableArray(ARGS_ICON_ITEMS_ID, iconItems);
             args.putInt(ARGS_POSITIVE_BTN_TEXT_RES_ID, positiveBtnTextResId);
             args.putInt(ARGS_NEGATIVE_BTN_TEXT_RES_ID, negativeBtnTextResId);
             args.putInt(ARGS_NEUTRAL_BTN_TEXT_RES_ID, neutralBtnTextResId);
             args.putBoolean(ARGS_CANCELABLE, cancelable);
-            if (params != null) {
-                args.putBundle(ARGS_PARAMS, params);
-            }
+            args.putBundle(ARGS_REQUESTS, requests);
             args.putInt(ARGS_DIALOG_ID, dialogId);
             args.putBoolean(ARGS_EVENT_TRACKING_ENABLED, eventTrackingEnabled);
 
             final AkDialogFragment fragment = new AkDialogFragment();
             fragment.setArguments(args);
             fragment.show(activity.getSupportFragmentManager(), tag);
+        }
+    }
+
+    private static class InternalUtil {
+
+        static int getDialogId(@NonNull Bundle args) {
+            return args.getInt(ARGS_DIALOG_ID);
+        }
+
+        @NonNull
+        static ViewMode getViewMode(@NonNull Bundle args) {
+            final Bundle requests = args.getBundle(ARGS_REQUESTS);
+            if (requests == null) {
+                return ViewMode.DEFAULT;
+            }
+            Serializable enumValue = requests.getSerializable(REQUEST_VIEW_MODE);
+            return enumValue != null ? (ViewMode) enumValue : ViewMode.DEFAULT;
+        }
+
+        @NonNull
+        static Bundle createMandatoryResponses(@NonNull Bundle args) {
+            Bundle requests = args.getBundle(ARGS_REQUESTS);
+            if (requests == null) {
+                return new Bundle();
+            }
+            Bundle responses = new Bundle();
+            responses.putSerializable(RESPONSE_VIEW_MODE, requests.getSerializable(REQUEST_VIEW_MODE));
+            responses.putParcelable(RESPONSE_INTENT, requests.getParcelable(REQUEST_INTENT));
+            return responses;
         }
     }
 
@@ -417,17 +519,14 @@ public class AkDialogFragment extends DialogFragment {
             this.args = args;
         }
 
-        Bundle getParams() {
-            return args.getBundle(ARGS_PARAMS);
-        }
-
-        private int getDialogId() {
-            return args.getInt(ARGS_DIALOG_ID);
+        @NonNull
+        Bundle createResponses(@NonNull DialogInterface dialog) {
+            return InternalUtil.createMandatoryResponses(args);
         }
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            callback.onAkDialogClicked(getDialogId(), which, getParams());
+            callback.onAkDialogClicked(InternalUtil.getDialogId(args), which, createResponses(dialog));
         }
     }
 
@@ -449,10 +548,23 @@ public class AkDialogFragment extends DialogFragment {
         @ArrayRes
         private final int itemsResId;
 
+        private int checkedItemId = NO_ITEM_ID;
+
+        private String checkedItem;
+
         private OnItemClickListener(@Nullable String title, @ArrayRes int itemsResId, @NonNull Callback callback, @NonNull Bundle args) {
             super(callback, args);
             this.title = title;
             this.itemsResId = itemsResId;
+        }
+
+        @NonNull
+        @Override
+        Bundle createResponses(@NonNull DialogInterface dialog) {
+            Bundle responses = InternalUtil.createMandatoryResponses(args);
+            responses.putInt(RESPONSE_CHECKED_ITEM_ID, checkedItemId);
+            responses.putString(RESPONSE_CHECKED_ITEM_VALUE, checkedItem);
+            return responses;
         }
 
         @Override
@@ -460,17 +572,9 @@ public class AkDialogFragment extends DialogFragment {
             AlertDialog alertDialog = (AlertDialog) dialog;
             if (itemsResId > 0) {
                 Context context = alertDialog.getContext();
-                String checkedItem = context.getResources().getStringArray(itemsResId)[which];
+                this.checkedItemId = which;
+                this.checkedItem = context.getResources().getStringArray(itemsResId)[which];
                 Log.i(TAG, "Event tracking: " + title + " [" + checkedItem + "]");
-
-                Bundle p = new Bundle();
-                Bundle params = getParams();
-                if (params != null) {
-                    p = new Bundle(params);
-                }
-                p.putInt(PARAM_CHECKED_ITEM_ID, which);
-                p.putString(PARAM_CHECKED_ITEM_VALUE, checkedItem);
-                args.putBundle(ARGS_PARAMS, p);
             } else {
                 Log.w(TAG, "Event tracking has been disabled: itemsResId is ArrayRes");
             }
@@ -496,10 +600,23 @@ public class AkDialogFragment extends DialogFragment {
         @StringRes
         private final int btnTextResId;
 
+        private int checkedItemId = NO_ITEM_ID;
+
+        private String checkedItem;
+
         private OnButtonClickListener(@Nullable String title, @StringRes int btnTextResId, @NonNull Callback callback, @NonNull Bundle args) {
             super(callback, args);
             this.title = title;
             this.btnTextResId = btnTextResId;
+        }
+
+        @NonNull
+        @Override
+        Bundle createResponses(@NonNull DialogInterface dialog) {
+            Bundle responses = InternalUtil.createMandatoryResponses(args);
+            responses.putInt(RESPONSE_CHECKED_ITEM_ID, checkedItemId);
+            responses.putString(RESPONSE_CHECKED_ITEM_VALUE, checkedItem);
+            return responses;
         }
 
         @Override
@@ -509,17 +626,10 @@ public class AkDialogFragment extends DialogFragment {
             if (listView != null) {
                 int position = listView.getCheckedItemPosition();
                 if (position != ListView.INVALID_POSITION) {
-                    String checkedItem = (String) listView.getAdapter().getItem(position);
+                    this.checkedItemId = position;
+                    DialogItemAdapter.Item item = (DialogItemAdapter.Item) listView.getAdapter().getItem(position);
+                    this.checkedItem = item.text;
                     Log.i(TAG, "Event tracking: " + title + " [" + position + ":" + checkedItem + "]");
-
-                    Bundle p = new Bundle();
-                    Bundle params = getParams();
-                    if (params != null) {
-                        p = new Bundle(params);
-                    }
-                    p.putInt(PARAM_CHECKED_ITEM_ID, position);
-                    p.putString(PARAM_CHECKED_ITEM_VALUE, checkedItem);
-                    args.putBundle(ARGS_PARAMS, p);
                 }
                 super.onClick(dialog, which);
             } else {
