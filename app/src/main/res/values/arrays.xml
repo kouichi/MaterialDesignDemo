@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="dialog_10_item_list_item_drawables">
+    <array name="dialog_7_item_list_item_drawables">
         <item>@drawable/ic_person_vector_tinted_40dp</item>
         <item>@drawable/ic_person_vector_tinted_40dp</item>
         <item>@drawable/ic_person_vector_tinted_40dp</item>
         <item>@drawable/ic_add_circle_vector_tinted_40dp</item>
     </array>
-    <array name="dialog_14_item_list_item_drawables">
+    <array name="dialog_11_item_list_item_drawables">
         <item>@drawable/ic_person_vector_tinted_40dp</item>
         <item>@drawable/ic_person_vector_tinted_40dp</item>
         <item>@drawable/ic_person_vector_tinted_40dp</item>

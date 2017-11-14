@@ -33,18 +33,15 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
     private static final int DLG_2_ALERT_ID = 2;
     private static final int DLG_3_ALERT_ID = 3;
     private static final int DLG_4_ALERT_ID = 4;
-    private static final int DLG_5_ALERT_ID = 5;
-    private static final int DLG_6_ALERT_ID = 6;
-    private static final int DLG_7_CONFIRMATION_ID = 7;
-    private static final int DLG_8_CONFIRMATION_ID = 8;
-    private static final int DLG_9_SIMPLE_ID = 9;
-    private static final int DLG_10_ITEM_LIST_ID = 10;
-    private static final int DLG_11_ALERT_ID = 11;
-    private static final int DLG_12_CONFIRMATION_ID = 12;
-    private static final int DLG_13_SIMPLE_ID = 13;
-    private static final int DLG_14_ITEM_LIST_ID = 14;
-    private static final int DLG_15_ALERT_ID = 15;
-    private static final int DLG_16_ALERT_ID = 16;
+    private static final int DLG_5_CONFIRMATION_ID = 5;
+    private static final int DLG_6_SIMPLE_ID = 6;
+    private static final int DLG_7_ITEM_LIST_ID = 7;
+    private static final int DLG_8_ALERT_ID = 8;
+    private static final int DLG_9_CONFIRMATION_ID = 9;
+    private static final int DLG_10_SIMPLE_ID = 10;
+    private static final int DLG_11_ITEM_LIST_ID = 11;
+    private static final int DLG_12_ALERT_ID = 12;
+    private static final int DLG_13_ALERT_ID = 13;
 
     private static final SparseArray<DialogResHolder> DIALOG_RES_HOLDER_MAP = new SparseArray<>();
 
@@ -57,87 +54,72 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         R.string.dialog_1_alert_btn_negative,
                         UNKNOWN_RES_ID));
         DIALOG_RES_HOLDER_MAP.put(DLG_2_ALERT_ID,
-                new AlertDialogResHolder(R.style.MyThemeOverlay_Dialog_Alert,
+                new AlertDialogResHolder(R.style.MyThemeOverlay_Dialog_Alert_Warn,
                         R.string.dialog_2_alert_title,
                         R.string.dialog_2_alert_msg,
                         R.string.dialog_2_alert_btn_positive,
                         R.string.dialog_2_alert_btn_negative,
                         UNKNOWN_RES_ID));
         DIALOG_RES_HOLDER_MAP.put(DLG_3_ALERT_ID,
-                new AlertDialogResHolder(R.style.MyThemeOverlay_Dialog_Alert_Warn,
+                new AlertDialogResHolder(
                         R.string.dialog_3_alert_title,
                         R.string.dialog_3_alert_msg,
                         R.string.dialog_3_alert_btn_positive,
                         R.string.dialog_3_alert_btn_negative,
                         UNKNOWN_RES_ID));
         DIALOG_RES_HOLDER_MAP.put(DLG_4_ALERT_ID,
-                new AlertDialogResHolder(
+                new AlertDialogResHolder(R.style.MyThemeOverlay_Dialog_Alert_Warn,
                         R.string.dialog_4_alert_title,
                         R.string.dialog_4_alert_msg,
                         R.string.dialog_4_alert_btn_positive,
                         R.string.dialog_4_alert_btn_negative,
                         UNKNOWN_RES_ID));
-        DIALOG_RES_HOLDER_MAP.put(DLG_5_ALERT_ID,
-                new AlertDialogResHolder(R.style.MyThemeOverlay_Dialog_Alert,
-                        R.string.dialog_5_alert_title,
-                        R.string.dialog_5_alert_msg,
-                        R.string.dialog_5_alert_btn_positive,
-                        R.string.dialog_5_alert_btn_negative,
-                        UNKNOWN_RES_ID));
-        DIALOG_RES_HOLDER_MAP.put(DLG_6_ALERT_ID,
-                new AlertDialogResHolder(R.style.MyThemeOverlay_Dialog_Alert_Warn,
-                        R.string.dialog_6_alert_title,
-                        R.string.dialog_6_alert_msg,
-                        R.string.dialog_6_alert_btn_positive,
-                        R.string.dialog_6_alert_btn_negative,
-                        UNKNOWN_RES_ID));
-        DIALOG_RES_HOLDER_MAP.put(DLG_7_CONFIRMATION_ID,
-                new ConfirmationDialogResHolder(R.string.dialog_7_confirmation_title,
-                        R.array.dialog_7_confirmation_items));
-        DIALOG_RES_HOLDER_MAP.put(DLG_8_CONFIRMATION_ID,
-                new ConfirmationDialogResHolder(R.style.MyThemeOverlay_Dialog_Alert,
-                        R.string.dialog_8_confirmation_title,
-                        R.array.dialog_8_confirmation_items));
-        DIALOG_RES_HOLDER_MAP.put(DLG_9_SIMPLE_ID,
-                new SimpleDialogResHolder(R.string.dialog_9_simple_title,
-                        R.array.dialog_9_simple_items));
-        DIALOG_RES_HOLDER_MAP.put(DLG_10_ITEM_LIST_ID,
-                new ItemListDialogResHolder(R.string.dialog_10_item_list_title,
-                        R.array.dialog_10_item_list_item_drawables,
-                        R.array.dialog_10_item_list_items));
-        DIALOG_RES_HOLDER_MAP.put(DLG_11_ALERT_ID,
-                new AlertDialogResHolder(
-                        R.string.dialog_11_alert_title,
-                        R.string.dialog_11_alert_msg,
-                        R.string.dialog_11_alert_btn_positive,
-                        R.string.dialog_11_alert_btn_negative,
-                        UNKNOWN_RES_ID));
-        DIALOG_RES_HOLDER_MAP.put(DLG_12_CONFIRMATION_ID,
+        DIALOG_RES_HOLDER_MAP.put(DLG_5_CONFIRMATION_ID,
                 new ConfirmationDialogResHolder(
-                        R.string.dialog_12_confirmation_title,
-                        R.array.dialog_12_confirmation_items));
-        DIALOG_RES_HOLDER_MAP.put(DLG_13_SIMPLE_ID,
+                        R.string.dialog_5_confirmation_title,
+                        R.array.dialog_5_confirmation_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_6_SIMPLE_ID,
                 new SimpleDialogResHolder(
-                        R.string.dialog_13_simple_title,
-                        R.array.dialog_13_simple_items));
-        DIALOG_RES_HOLDER_MAP.put(DLG_14_ITEM_LIST_ID,
+                        R.string.dialog_6_simple_title,
+                        R.array.dialog_6_simple_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_7_ITEM_LIST_ID,
                 new ItemListDialogResHolder(
-                        R.string.dialog_14_item_list_title,
-                        R.array.dialog_14_item_list_item_drawables,
-                        R.array.dialog_14_item_list_items));
-        DIALOG_RES_HOLDER_MAP.put(DLG_15_ALERT_ID,
+                        R.string.dialog_7_item_list_title,
+                        R.array.dialog_7_item_list_item_drawables,
+                        R.array.dialog_7_item_list_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_8_ALERT_ID,
                 new AlertDialogResHolder(
-                        R.string.dialog_15_alert_title,
+                        R.string.dialog_8_alert_title,
+                        R.string.dialog_8_alert_msg,
+                        R.string.dialog_8_alert_btn_positive,
+                        R.string.dialog_8_alert_btn_negative,
+                        UNKNOWN_RES_ID));
+        DIALOG_RES_HOLDER_MAP.put(DLG_9_CONFIRMATION_ID,
+                new ConfirmationDialogResHolder(
+                        R.string.dialog_9_confirmation_title,
+                        R.array.dialog_9_confirmation_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_10_SIMPLE_ID,
+                new SimpleDialogResHolder(
+                        R.string.dialog_10_simple_title,
+                        R.array.dialog_10_simple_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_11_ITEM_LIST_ID,
+                new ItemListDialogResHolder(
+                        R.string.dialog_11_item_list_title,
+                        R.array.dialog_11_item_list_item_drawables,
+                        R.array.dialog_11_item_list_items));
+        DIALOG_RES_HOLDER_MAP.put(DLG_12_ALERT_ID,
+                new AlertDialogResHolder(
+                        R.string.dialog_12_alert_title,
                         UNKNOWN_RES_ID,
-                        R.string.dialog_15_alert_btn_positive,
+                        R.string.dialog_12_alert_btn_positive,
                         UNKNOWN_RES_ID,
                         UNKNOWN_RES_ID));
-        DIALOG_RES_HOLDER_MAP.put(DLG_16_ALERT_ID,
+        DIALOG_RES_HOLDER_MAP.put(DLG_13_ALERT_ID,
                 new AlertDialogResHolder(
-                        R.string.dialog_16_alert_title,
-                        R.string.dialog_16_alert_msg,
-                        R.string.dialog_16_alert_btn_positive,
-                        R.string.dialog_16_alert_btn_negative,
+                        R.string.dialog_13_alert_title,
+                        R.string.dialog_13_alert_msg,
+                        R.string.dialog_13_alert_btn_positive,
+                        R.string.dialog_13_alert_btn_negative,
                         UNKNOWN_RES_ID));
     }
 
@@ -170,22 +152,22 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
             int dialogId = position + 1;
             DialogResHolder dialogResHolder = DIALOG_RES_HOLDER_MAP.get(dialogId);
             Bundle requests = new Bundle();
-            if (dialogId >= DLG_11_ALERT_ID) {
+            if (dialogId >= DLG_8_ALERT_ID) {
                 switch (dialogId) {
-                    case DLG_11_ALERT_ID:
+                    case DLG_8_ALERT_ID:
                         requests.putStringArray(AkDialogFragment.REQUEST_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
                         requests.putStringArray(AkDialogFragment.REQUEST_MESSAGE_VALUE_ARRAY, new String[]{"AKNOT"});
                         break;
-                    case DLG_12_CONFIRMATION_ID:
-                    case DLG_13_SIMPLE_ID:
-                    case DLG_14_ITEM_LIST_ID:
+                    case DLG_9_CONFIRMATION_ID:
+                    case DLG_10_SIMPLE_ID:
+                    case DLG_11_ITEM_LIST_ID:
                         requests.putStringArray(AkDialogFragment.REQUEST_TITLE_VALUE_ARRAY, new String[]{"AKNOT"});
                         break;
-                    case DLG_15_ALERT_ID:
+                    case DLG_12_ALERT_ID:
                         requests.putSerializable(AkDialogFragment.REQUEST_VIEW_MODE, AkDialogFragment.ViewMode.WEBVIEW);
                         requests.putString(AkDialogFragment.REQUEST_WEBVIEW_LOAD_URL, "https://www.google.co.jp/");
                         break;
-                    case DLG_16_ALERT_ID:
+                    case DLG_13_ALERT_ID:
                         requests.putSerializable(AkDialogFragment.REQUEST_VIEW_MODE, AkDialogFragment.ViewMode.PASSWORD_INPUT);
                         break;
                     default:
@@ -209,11 +191,9 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
             case DLG_2_ALERT_ID:
             case DLG_3_ALERT_ID:
             case DLG_4_ALERT_ID:
-            case DLG_5_ALERT_ID:
-            case DLG_6_ALERT_ID:
-            case DLG_11_ALERT_ID:
-            case DLG_15_ALERT_ID:
-            case DLG_16_ALERT_ID:
+            case DLG_8_ALERT_ID:
+            case DLG_12_ALERT_ID:
+            case DLG_13_ALERT_ID:
                 switch (resultCode) {
                     case DialogInterface.BUTTON_POSITIVE:
                         action = "pressed Positive Button";
@@ -228,9 +208,8 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         break;
                 }
                 break;
-            case DLG_7_CONFIRMATION_ID:
-            case DLG_8_CONFIRMATION_ID:
-            case DLG_12_CONFIRMATION_ID:
+            case DLG_5_CONFIRMATION_ID:
+            case DLG_9_CONFIRMATION_ID:
                 switch (resultCode) {
                     case DialogInterface.BUTTON_POSITIVE:
                         int checkedItemId = responses.getInt(AkDialogFragment.RESPONSE_CHECKED_ITEM_ID);
@@ -247,10 +226,10 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
                         break;
                 }
                 break;
-            case DLG_9_SIMPLE_ID:
-            case DLG_10_ITEM_LIST_ID:
-            case DLG_13_SIMPLE_ID:
-            case DLG_14_ITEM_LIST_ID:
+            case DLG_6_SIMPLE_ID:
+            case DLG_7_ITEM_LIST_ID:
+            case DLG_10_SIMPLE_ID:
+            case DLG_11_ITEM_LIST_ID:
                 if (responses != null) {
                     int checkedItemId = responses.getInt(AkDialogFragment.RESPONSE_CHECKED_ITEM_ID);
                     String checkedItemValue = responses.getString(AkDialogFragment.RESPONSE_CHECKED_ITEM_VALUE);
