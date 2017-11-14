@@ -667,11 +667,11 @@ public class AkDialogFragment extends DialogFragment {
 
         private static final int NO_ICON_RES_ID = 0;
 
-        public DialogItemAdapter(@NonNull Context context, @LayoutRes int layoutResId, @IdRes int textViewResId, @ArrayRes int itemsResId) {
+        private DialogItemAdapter(@NonNull Context context, @LayoutRes int layoutResId, @IdRes int textViewResId, @ArrayRes int itemsResId) {
             this(context, layoutResId, textViewResId, NO_ICON_RES_ID, itemsResId);
         }
 
-        public DialogItemAdapter(@NonNull Context context,
+        private DialogItemAdapter(@NonNull Context context,
                 @LayoutRes int layoutResId, @IdRes int textViewResId, @ArrayRes int iconItemsResId, @ArrayRes int itemsResId) {
             this.context = context;
             this.layoutResId = layoutResId;
@@ -740,10 +740,10 @@ public class AkDialogFragment extends DialogFragment {
         private static class Item {
 
             @DrawableRes
-            public final int iconResId;
+            private final int iconResId;
 
             @NonNull
-            public final String text;
+            private final String text;
 
             public Item(@DrawableRes int iconResId, @NonNull String text) {
                 this.iconResId = iconResId;
