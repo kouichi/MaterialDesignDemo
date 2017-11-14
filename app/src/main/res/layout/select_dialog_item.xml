@@ -12,7 +12,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:minHeight="?attr/listPreferredItemHeightSmall"
-          android:textAppearance="@style/MyTextAppearance.Alert.Dialog.Item"
+          android:textAppearance="@style/MyTextAppearance.Dialog.Alert.Item"
           android:textColor="?attr/textColorAlertDialogListItem"
           android:gravity="center_vertical"
           android:paddingLeft="?attr/dialogPreferredPadding"

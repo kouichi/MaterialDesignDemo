@@ -226,7 +226,7 @@ public class AkDialogFragment extends DialogFragment {
             TextView textView = alertDialog.findViewById(android.R.id.message);
             if (textView != null) {
                 textView.setLineSpacing(0, 1.3f); // TODO: 値は適当になので調整が必要
-                TextViewCompat.setTextAppearance(textView, R.style.MyTextAppearance_Alert_Dialog_Message);
+                TextViewCompat.setTextAppearance(textView, R.style.MyTextAppearance_Dialog_Alert_Message);
             }
 
             Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);

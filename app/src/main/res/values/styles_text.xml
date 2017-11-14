@@ -53,14 +53,14 @@
     <!--
       ~ Especial TextAppearance
     -->
-    <style name="MyTextAppearance.Alert.Dialog" parent="MyTextAppearance.Body1"/>
+    <style name="MyTextAppearance.Dialog.Alert" parent="MyTextAppearance.Body1"/>
 
-    <style name="MyTextAppearance.Alert.Dialog.Message">
+    <style name="MyTextAppearance.Dialog.Alert.Message">
         <item name="android:textColor">@color/gray01</item>
     </style>
 
-    <style name="MyTextAppearance.Alert.Dialog.SingleChoice"/>
+    <style name="MyTextAppearance.Dialog.Alert.SingleChoice"/>
 
-    <style name="MyTextAppearance.Alert.Dialog.Item"/>
+    <style name="MyTextAppearance.Dialog.Alert.Item"/>
 
 </resources>
