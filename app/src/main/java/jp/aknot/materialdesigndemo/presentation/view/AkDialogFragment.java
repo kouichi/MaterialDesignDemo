@@ -77,6 +77,8 @@ public class AkDialogFragment extends DialogFragment {
 
     public static final int UNKNOWN_RES_ID = 0;
 
+    private static final float DIALOG_MESSAGE_LINE_SPACING_MULTIPLIER = 1.3f;
+
     private boolean eventTrackingEnabled;
 
     private Callback callback;
@@ -225,7 +227,7 @@ public class AkDialogFragment extends DialogFragment {
             AlertDialog alertDialog = (AlertDialog) dlg;
             TextView textView = alertDialog.findViewById(android.R.id.message);
             if (textView != null) {
-                textView.setLineSpacing(0, 1.3f); // TODO: 値は適当になので調整が必要
+                textView.setLineSpacing(0, DIALOG_MESSAGE_LINE_SPACING_MULTIPLIER);
                 TextViewCompat.setTextAppearance(textView, R.style.MyTextAppearance_Dialog_Alert_Message);
             }
 
