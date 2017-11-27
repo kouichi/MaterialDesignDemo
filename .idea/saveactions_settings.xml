@@ -11,5 +11,11 @@
         <option value="unnecessarySemicolon" />
       </set>
     </option>
+    <option name="configurationPath" value="" />
+    <option name="exclusions">
+      <set>
+        <option value="build\.gradle" />
+      </set>
+    </option>
   </component>
 </project>
