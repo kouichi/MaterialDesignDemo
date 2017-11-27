@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         SimpleListAdapter.Item[] items = {
                 new SimpleListAdapter.Item("Buttons"),
                 new SimpleListAdapter.Item("Dialog"),
+                new SimpleListAdapter.Item("EULA"),
         };
         SimpleListAdapter adapter = new SimpleListAdapter(this, items);
 
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 1:
                     startNextActivity(DialogActivity.class, view);
+                    break;
+                case 2:
+                    startNextActivity(EulaActivity.class, view);
                     break;
                 default:
                     break;

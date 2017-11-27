@@ -96,9 +96,14 @@
     <string name="dialog_13_alert_btn_positive">@string/btn_label_ok</string>
     <string name="dialog_13_alert_btn_negative">@string/btn_label_cancel</string>
 
+    <!-- Terms of use -->
+    <string name="eula_activity_title">EULA</string>
+    <string name="eula_activity_txt_description">※会員登録前にサービス利用規約、個人情報保護方針をご確認の上、「同意する」ボタンを押してください。</string>
+
     <!-- Button -->
     <string name="btn_label_ok">OK</string>
     <string name="btn_label_cancel">キャンセル</string>
+    <string name="btn_accept">同意する</string>
 
     <!-- Dialog -->
     <string name="dialog_hint_password">パスワード</string>
