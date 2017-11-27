@@ -14,7 +14,6 @@ public class ButtonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_button);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_vector_tinted_24dp);
         toolbar.setNavigationOnClickListener(view -> finish());
     }
 }

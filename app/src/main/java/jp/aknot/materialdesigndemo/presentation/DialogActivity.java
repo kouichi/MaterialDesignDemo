@@ -178,7 +178,6 @@ public class DialogActivity extends AppCompatActivity implements AkDialogFragmen
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_vector_tinted_24dp);
         toolbar.setNavigationOnClickListener(view -> finish());
     }
 

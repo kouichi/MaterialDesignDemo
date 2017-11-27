@@ -9,6 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_close_vector_tinted_24dp"
         app:title="@string/eula_activity_title"
         />
 

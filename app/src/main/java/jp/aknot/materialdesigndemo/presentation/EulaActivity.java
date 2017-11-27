@@ -18,7 +18,6 @@ public class EulaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_eula);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_close_vector_tinted_24dp);
         toolbar.setNavigationOnClickListener(view -> finish());
 
         TextView textView = findViewById(R.id.textView);

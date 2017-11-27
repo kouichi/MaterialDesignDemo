@@ -16,7 +16,6 @@ public class MenuActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_menu);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_vector_tinted_24dp);
         toolbar.setNavigationOnClickListener(view -> finish());
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
